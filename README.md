@@ -8,7 +8,7 @@ GuanoPipeline is a modular workflow for processing full-length 16S rRNA gene amp
 <img width="793" height="275" alt="Screenshot from 2026-07-10 15-38-46" src="https://github.com/user-attachments/assets/01e163a0-0d4f-4888-951e-c15638b81f8b" />
 
 ## 2. Installation
-
+THIS SECTION IS STILL ON GOING - DO NOT FOLLOW IT
 ```
 https://github.com/MIDIfactory/SYMBIONT-SCREENER.git
 cd GuanoPipeline
