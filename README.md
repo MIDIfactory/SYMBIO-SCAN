@@ -1,12 +1,13 @@
 # SYMBIONT-SCREENER
 A bioinformatic approach to obtain high quality sequences by full-length 16S amplicons 
 
-1. Overview
+## 1. Overview
 
 GuanoPipeline is a modular workflow for processing full-length 16S rRNA gene amplicons generated with Oxford Nanopore Technologies. The pipeline was designed to obtain a general snapshot of the bacterial community associated with a host of interest, as well as high-quality sequences of those symbionts. The pipeline performs read quality control, trimming, taxonomic classification, consensus sequence generation and preliminary phylogenetic analysis. 
 
+<img width="793" height="275" alt="Screenshot from 2026-07-10 15-38-46" src="https://github.com/user-attachments/assets/01e163a0-0d4f-4888-951e-c15638b81f8b" />
 
-2. Installation
+## 2. Installation
 
 ```
 https://github.com/MIDIfactory/SYMBIONT-SCREENER.git
@@ -15,12 +16,21 @@ conda env create -f environments/environment.yml
 conda activate guanopipeline
 ```
 
-3. Usage
+## 3. Quick start
+
+To analysize your reads just type 
+
+```
+./guanopipeline -i <your_data_dir> 
+```
+
+By default a folder named ``<base_data_path>_SymbiontScreener_results`` will appear in your ``<your_data_dir>`` folder (to specify the out_dir use the -o option).
+
 
 Using the command 
 
 ```
-./guano_pipeline.sh -i
+./guano_pipeline.sh -h
 ```
 the pipeline usage will show up
 
@@ -69,27 +79,76 @@ Module 5: Consensus sequence generation
   -h  Show this help message
 ```
 
+## 4. Main outputs
+**Quality queck report**
 
-3. Pipeline description
+``stats_pre_trimming.txt``: pre-procesing seqkit quality stats report of the reads 
 
-3.1 Quality assessment
+``multiqc_post_report.html``: pre-procesing multiqc quality check report of the reads 
+
+``stats_post_trimming.txt``: post-procesing seqkit quality stats report of the reads 
+
+``multiqc_pre_report.html``: post-procesing multiqc quality check report of the reads 
+
+**Bacterial community profiling**
+
+``test_data_results_krona_raw.html`` and ``stacked_barplot_top30.pdf``: kronaplot and barplot rapresenting the bacterial taxonomic classification of the untrimmed raw reads using a confidence of 0.0 (aka giving a taxonomic classification whenever possible to get as broad as possible picture of the reads composition for each sample)
+
+``test_data_results_krona_filt.html`` and ``stacked_barplot.png``: kronaplot and barplot rapresenting the bacterial taxonomic classification of the trimmed filtered reads using a confidence of 0.1 (aka giving a more conservative taxonomic classification of the reads composition for each sample)
+
+**High-quality sequences**
+
+``test_data_results_full_summary_list.fasta``: fasta file containing all the high-quality sequences obtained
+
+The header is tab delimitated string having the following  fields:
+
+``>'sample' 'cluster' 'OTUs' 'size' 'perc_id' 'tax'``
+
+
+- sample: sample name
+- cluster: univoque name of a sequence, and formed by the sample name followed by the cluster number for that specific sample - a cluster is basically the consensus sequence produced after that the preliminary OTUs are generated and the second clustering step occurs)
+- OTUs: the OTU names of the sequences that are composing each cluster after the second clustering step
+- size: number of reads composing a specific sequence
+- perc_id: percentage identity of a specific sequence with its most similar reference sequence
+- tax: putative taxonomy of a sequence 
+
+es. 
+
+```
+>Bm26	Bm26_cluster_1	OTU_22;OTU_18;OTU_46;OTU_40;OTU_4;OTU_41;OTU_50;OTU_111	size=772	99.414	putative HADL01018443.69.1552 Bacteria;Proteobacteria;Alphaproteobacteria;Rickettsiales;Anaplasmataceae;Wolbachia;Calligrapha confluens
+```
+
+
+``test_data_results_full_sus_summary_list.fasta``: fasta file containing all the suspicious sequences obtained
+
+``test_data_results_summary_table.tsv``: tab separated file easy to use as data sheet, where the rows are "samples names", the columns are "bacterial species", and the field cells are "fasta sequences" for that specific host-associated bacteria. 
+
+**Rough preliminary phylogeny**
+
+``test_data_results_preliminary_phylogeny.treefile``: treefile containing the preliminary taxonomy of the high-quality sequences and their reference sequences for each sample
+
+
+
+## 5. Pipeline description
+
+### 5.1 Quality assessment
 
 Raw reads quality assessment is performed with FastQC (v0.12.1), multiqc (v1.31) and NanoPlot (v1.46.1). 
 
-3.2 Read trimming
+### 5.2 Read trimming
 
 Read preprocessing is performed with fastplong (v0.4.1) to remove adapter sequences, low-quality regions, and reads outside the expected length range. Trimming and filtering parameters are optimized for long-read amplicon sequencing, including quality-based trimming at both read ends, removal of low-quality reads, and retention of reads between 500 and 2000 bp. 
 In particular the following parameters are used by default: reads shorter than 500 bp or longer than 2000 bp are discarded (--length_required 500 --length_limit 2000); the first 30 bases of each read are trimmed (--trim_front 30); sliding-window quality trimming is applied to both 5′ and 3′ ends (--cut_front --cut_front_window_size 3 --cut_front_mean_quality 25 --cut_tail --cut_tail_window_size 3 --cut_tail_mean_quality 25); bases with Phred quality scores below 15 are considered unqualified (--qualified_quality_phred 15); and reads with a mean Phred quality score below 20 are removed (--mean_qual 20).
 
-3.3 Post processing quality assessment
+### 5.3 Post processing quality assessment
 
 Trimmed reads quality assessment is performed as previously described. 
 
-3.4 Bacterial community profiling 
+### 5.4 Bacterial community profiling 
 
 Taxonomic classification of trimmed reads is performed using Kraken (v2.1.6) with the SILVA reference database (SILVA 138.1). Genus-level abundance estimates are subsequently refined using Bracken (v3.0.1). Taxonomic profiles are visualized with Krona (KronaTools v2.8.1). Only reads assigned by Kraken are retained for downstream analyses, whereas unclassified reads are discarded, as they often comprised non-specific amplification products, host-derived sequences or other sequencing artifacts. 
 
-3.5 Consensus generation
+### 5.5 Consensus generation
 
 The Kraken classified sequences are oriented using vsearch (v2.30.0) and converted to fasta format using seqkit (v2.3.0). A preliminary chimera screening is performed with vsearch (v2.30.0) using the UCHIME_REF algorithm and the GOLD database as reference. Only sequences identified as chimeric are discarded, whereas borderline sequences are retained for downstream analyses. Length filtering is subsequently applied using seqkit to retain sequences at least 1000 bp long. 
 
@@ -101,6 +160,6 @@ As mentioned above, after the previously discussed polishing steps, some consens
 
 The final consensus sequences are reclassified taxonomically and screened again for chimeras as described above. Because some chimeric sequences may persist through the entire analysis pipeline, the final sequences assigned to the same genus are re-evaluated. When multiple consensus sequences belong to the same genus, the sequence with the smaller size (i.e., the lower number of reads contributing to that consensus sequence) is flagged as a potential chimera. This approach is based on the assumption that the co-occurrence of multiple bacterial taxa from the same genus within a sample is less likely than the presence of a chimeric artifact. The high-quality sequences obtained are used for the further phylogenetic analyses. 
 
-3.6 Preliminary phylogeny
+### 5.6 Preliminary phylogeny
 
 The obtained high-quality sequences and the reference sequences used for their taxonomical classification are then very basically aligned with mafft (v7.505), trimmed with (v1.5.rev1) and a preliminary phylogenetic tree is inferred with iqtree2 (v2.0.7). 
