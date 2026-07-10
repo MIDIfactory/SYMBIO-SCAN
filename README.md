@@ -18,13 +18,13 @@ conda activate guanopipeline
 
 ## 3. Quick start
 
-To analysize your reads just type 
+To analysize your reads just run 
 
 ```
 ./guanopipeline -i <your_data_dir> 
 ```
 
-By default a folder named ``<base_data_path>_SymbiontScreener_results`` will appear in your ``<your_data_dir>`` folder (to specify the out_dir use the -o option).
+By default a folder named ``<base_data_path>_SymbiontScreener_results`` will appear in your ``working_directory`` (to specify the out_dir use the -o option).
 
 
 Using the command 
