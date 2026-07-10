@@ -5,26 +5,91 @@ A bioinformatic approach to obtain high quality sequences by full-length 16S amp
 
 GuanoPipeline is a modular workflow for processing full-length 16S rRNA gene amplicons generated with Oxford Nanopore Technologies. The pipeline was designed to obtain a general snapshot of the bacterial community associated with a host of interest, as well as high-quality sequences of those symbionts. The pipeline performs read quality control, trimming, taxonomic classification, consensus sequence generation and preliminary phylogenetic analysis. 
 
-2. Pipeline description
 
-2.1 Quality assessment
+2. Installation
+
+```
+https://github.com/MIDIfactory/SYMBIONT-SCREENER.git
+cd GuanoPipeline
+conda env create -f environments/environment.yml
+conda activate guanopipeline
+```
+
+3. Usage
+
+Using the command 
+
+```
+./guano_pipeline.sh -i
+```
+the pipeline usage will show up
+
+```
+Usage: ./guano_pipeline.sh -i <data_path> [options]
+
+Required:
+  -i  Input directory containing FASTQ files
+
+General options:
+  -o  Output directory (default: basename of input path)
+  -t  Number of threads used by all modules (default: 12)
+
+  -r  Comma-separated list of modules to run (default: 1,2,3,4,5,6)
+      Available modules:
+        1  Reads quality check
+        2  Reads trimming
+        3  Post-trimming quality check
+        4  Taxonomic classification (Kraken2/Bracken)
+        5  Consensus sequence generation
+        6  Preliminary phylogeny
+
+Module 2: Read trimming
+  -m  Minimum read length after trimming (default: 500)
+  -M  Maximum read length (default: 2000)
+  -f  Bases to trim from the 5' end (default: 30)
+  -w  Sliding window size for quality trimming (default: 3)
+  -q  Mean quality threshold for quality trimming (default: 25)
+  -p  Qualified quality Phred score (default: 15)
+  -Q  Mean read quality threshold (default: 20)
+
+Module 5: Consensus sequence generation
+  -l  Minimum read length to retain for consensus generation (default: 1000)
+  -I  OTU clustering percent identity (default: 97)
+      NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
+  -s  Minimum number of reads required to form a cluster (default: 10)
+  -e  Allow correction outside the original consensus boundaries,
+      potentially extending the consensus using OTU-supported terminal
+      nucleotides
+  -x  Use the reference sequence to resolve nucleotide mismatches (default: True)
+  -g  Use the reference sequence to resolve gap positions (default: False)
+  -c  Collapse consensus sequences assigned to the same genus by
+      retaining only the largest cluster (default: True).
+      Set to False to disable this filtering step.
+
+  -h  Show this help message
+```
+
+
+3. Pipeline description
+
+3.1 Quality assessment
 
 Raw reads quality assessment is performed with FastQC (v0.12.1), multiqc (v1.31) and NanoPlot (v1.46.1). 
 
-2.2 Read trimming
+3.2 Read trimming
 
 Read preprocessing is performed with fastplong (v0.4.1) to remove adapter sequences, low-quality regions, and reads outside the expected length range. Trimming and filtering parameters are optimized for long-read amplicon sequencing, including quality-based trimming at both read ends, removal of low-quality reads, and retention of reads between 500 and 2000 bp. 
 In particular the following parameters are used by default: reads shorter than 500 bp or longer than 2000 bp are discarded (--length_required 500 --length_limit 2000); the first 30 bases of each read are trimmed (--trim_front 30); sliding-window quality trimming is applied to both 5′ and 3′ ends (--cut_front --cut_front_window_size 3 --cut_front_mean_quality 25 --cut_tail --cut_tail_window_size 3 --cut_tail_mean_quality 25); bases with Phred quality scores below 15 are considered unqualified (--qualified_quality_phred 15); and reads with a mean Phred quality score below 20 are removed (--mean_qual 20).
 
-2.3 Post processing quality assessment
+3.3 Post processing quality assessment
 
 Trimmed reads quality assessment is performed as previously described. 
 
-2.4 Bacterial community profiling 
+3.4 Bacterial community profiling 
 
 Taxonomic classification of trimmed reads is performed using Kraken (v2.1.6) with the SILVA reference database (SILVA 138.1). Genus-level abundance estimates are subsequently refined using Bracken (v3.0.1). Taxonomic profiles are visualized with Krona (KronaTools v2.8.1). Only reads assigned by Kraken are retained for downstream analyses, whereas unclassified reads are discarded, as they often comprised non-specific amplification products, host-derived sequences or other sequencing artifacts. 
 
-2.5 Consensus generation
+3.5 Consensus generation
 
 The Kraken classified sequences are oriented using vsearch (v2.30.0) and converted to fasta format using seqkit (v2.3.0). A preliminary chimera screening is performed with vsearch (v2.30.0) using the UCHIME_REF algorithm and the GOLD database as reference. Only sequences identified as chimeric are discarded, whereas borderline sequences are retained for downstream analyses. Length filtering is subsequently applied using seqkit to retain sequences at least 1000 bp long. 
 
@@ -36,6 +101,6 @@ As mentioned above, after the previously discussed polishing steps, some consens
 
 The final consensus sequences are reclassified taxonomically and screened again for chimeras as described above. Because some chimeric sequences may persist through the entire analysis pipeline, the final sequences assigned to the same genus are re-evaluated. When multiple consensus sequences belong to the same genus, the sequence with the smaller size (i.e., the lower number of reads contributing to that consensus sequence) is flagged as a potential chimera. This approach is based on the assumption that the co-occurrence of multiple bacterial taxa from the same genus within a sample is less likely than the presence of a chimeric artifact. The high-quality sequences obtained are used for the further phylogenetic analyses. 
 
-2.6 Preliminary phylogeny
+3.6 Preliminary phylogeny
 
 The obtained high-quality sequences and the reference sequences used for their taxonomical classification are then very basically aligned with mafft (v7.505), trimmed with (v1.5.rev1) and a preliminary phylogenetic tree is inferred with iqtree2 (v2.0.7). 
