@@ -1,11 +1,12 @@
+
 # SYMBIONT-SCREENER
 A bioinformatic approach to obtain high quality sequences by full-length 16S amplicons 
 
 ## 1. Overview
 
-GuanoPipeline is a modular workflow for processing full-length 16S rRNA gene amplicons generated with Oxford Nanopore Technologies. The pipeline was designed to obtain a general snapshot of the bacterial community associated with a host of interest, as well as high-quality sequences of those symbionts. The pipeline performs read quality control, trimming, taxonomic classification, consensus sequence generation and preliminary phylogenetic analysis. 
+SYMBIONT-SCREENER is a modular workflow for processing full-length 16S rRNA gene amplicons generated with Oxford Nanopore Technologies. The full bioinformatic analysis workflow was designed to process reads from each individual sample independently. The pipeline performs read quality control, trimming, taxonomic classification, consensus sequence generation and preliminary phylogenetic analysis. 
 
-<img width="793" height="275" alt="Screenshot from 2026-07-10 15-38-46" src="https://github.com/user-attachments/assets/01e163a0-0d4f-4888-951e-c15638b81f8b" />
+<img width="1151" height="1186" alt="Supplementary Figure 1 - workflow" src="https://github.com/user-attachments/assets/db22f3b0-80a5-46d4-8faf-cb9c4cf40336" />
 
 ## 2. Installation
 THIS SECTION IS STILL ON GOING - DO NOT FOLLOW IT
