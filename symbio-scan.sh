@@ -92,7 +92,7 @@ fi
 # Set defaults
 [ -z "${threads+x}" ] && threads=12
 base_data_path=$(basename "$data_path")
-[ -z "${results+x}" ] && results="${base_data_path}_SymbiontScreener_results"
+[ -z "${results+x}" ] && results="${base_data_path}_symbio-scan_results"
 results_name=$(basename "$results")
 [ -z "${modules+x}" ] && modules="1,2,3,4,5,6"
 
