@@ -30,7 +30,9 @@ Module 2: Read trimming
 
 Module 5: Consensus sequence generation
   -l  Minimum read length to retain for consensus generation (default: 1000)
-  -I  OTU clustering percent identity (default: 97)
+  -c  First OTU clustering percent identity (default: 97)
+      NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
+  -C  Second OTU clustering percent identity (default: 97)
       NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
   -s  Minimum number of reads required to form a cluster (default: 10)
   -e  Allow correction outside the original consensus boundaries,
@@ -38,7 +40,7 @@ Module 5: Consensus sequence generation
       nucleotides
   -x  Use the reference sequence to resolve nucleotide mismatches (default: True)
   -g  Use the reference sequence to resolve gap positions (default: False)
-  -c  Collapse consensus sequences assigned to the same genus by
+  -G  Collapse consensus sequences assigned to the same genus by
       retaining only the largest cluster (default: True).
       Set to False to disable this filtering step.
 
@@ -46,7 +48,7 @@ Module 5: Consensus sequence generation
 "
 
 # Parse options
-while getopts "i:o:t:r:m:M:f:w:q:p:Q:l:I:s:e:x:g:c:h" OPTION; do
+while getopts "i:o:t:r:m:M:f:w:q:p:Q:l:c:C:s:e:x:g:G:h" OPTION; do
   case $OPTION in
         i) data_path=$OPTARG;;
         o) results=$OPTARG;;
@@ -64,12 +66,13 @@ while getopts "i:o:t:r:m:M:f:w:q:p:Q:l:I:s:e:x:g:c:h" OPTION; do
 
         # Module 5: consensus generation
         l) min_len=$OPTARG;;
-        I) id=$OPTARG;;
+        c) id_1=$OPTARG;;
+        C) id_2=$OPTARG;;
         s) min_size=$OPTARG;;
         e) extend_ends=$OPTARG;;
         x) ref_mismatch=$OPTARG;;
         g) ref_gap=$OPTARG;;
-        c) collapse_genus=$OPTARG;;
+        G) collapse_genus=$OPTARG;;
 
         h) echo "$USAGE"; exit 0;;
         :) printf "Missing argument for option -$OPTARG\n" >&2; exit 1;;
@@ -90,6 +93,7 @@ fi
 [ -z "${threads+x}" ] && threads=12
 base_data_path=$(basename "$data_path")
 [ -z "${results+x}" ] && results="${base_data_path}_SymbiontScreener_results"
+results_name=$(basename "$results")
 [ -z "${modules+x}" ] && modules="1,2,3,4,5,6"
 
 # Module 2 defaults
@@ -103,7 +107,8 @@ base_data_path=$(basename "$data_path")
 
 # Module 5 defaults
 [ -z "${min_len+x}" ] && min_len=1000
-[ -z "${id+x}" ] && id=97
+[ -z "${id_1+x}" ] && id_1=97
+[ -z "${id_2+x}" ] && id_2=97
 [ -z "${min_size+x}" ] && min_size=10
 [ -z "${extend_ends+x}" ] && extend_ends=True
 [ -z "${ref_mismatch+x}" ] && ref_mismatch=True
@@ -113,10 +118,6 @@ base_data_path=$(basename "$data_path")
 run_module() {
     [[ ",$modules," == *",$1,"* ]]
 }
-
-# Load conda
-source /mnt/capivaradisk/carlo/miniforge3/etc/profile.d/conda.sh
-conda activate 16S
 
 #::::::::::::::::::::::::::::::::::::::::::::::
 # WELCOME
@@ -178,12 +179,13 @@ bash "$SCRIPT_DIR/scripts_and_files/5.amplicons_seqs.sh" \
     -i "$data_path" \
     -o "$results" \
     -l "$min_len" \
-    -I "$id" \
+    -c "$id_1" \
+    -C "$id_2" \
     -s "$min_size" \
     -e "$extend_ends" \
     -x "$ref_mismatch" \
     -g "$ref_gap" \
-    -c "$collapse_genus" \
+    -G "$collapse_genus" \
     -t "$threads"
 fi
 
@@ -193,6 +195,15 @@ bash "$SCRIPT_DIR/scripts_and_files/6.phylogeny.sh" \
     -o "$results" \
     -t "$threads"
 fi
+
+# Generate stats
+paste \
+   <(sed -E 's/ +/\t/g' "$results/1.quality_check_pre_processing/${results_name}_stats_pre_trimming.txt" | cut -f 1 | rev | cut -f 1 -d '/' | rev | sed 's/.fastq//g') \
+   <(sed -E 's/ +/\t/g' "$results/1.quality_check_pre_processing/${results_name}_stats_pre_trimming.txt" | cut -f 4-8) \
+   <(sed -E 's/ +/\t/g' "$results/3.quality_check_post_processing/${results_name}_stats_post_trimming.txt" | cut -f 4-8) \
+   <(cut -f 2- "$results/4.kraken/${results_name}_kraken_stats.tsv") \
+   <(cut -f 2- "$results/5.amplicons_seqs/${results_name}_clustering_stats.tsv") \
+   > "$results/main_outputs/${results_name}_stats.tsv"
 
 # Generate logs
 log_dir="$results/logs"
