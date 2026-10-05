@@ -1,42 +1,72 @@
 
-# SYMBIONT-SCREENER
-A bioinformatic approach to obtain high quality sequences by full-length 16S amplicons 
+# SYMBIO-SCAN
+SYMBIO-SCAN is a modular workflow for processing full-length 16S rRNA gene amplicons generated with Oxford Nanopore Technologies. The full bioinformatic analysis workflow was designed to process reads from each individual sample independently. The pipeline performs read quality control, trimming, taxonomic classification, consensus sequence generation and preliminary phylogenetic analysis. 
 
-## 1. Overview
+## Requirments
+- **Disk space:** at least 2 GB of free space
+- **CPU:** the pipeline can run with a single thread, but **at least 4 threads are recommended** for reasonable performance
+- **RAM:** at least 8 GB is recommended
+- **Operating system:** Linux or another Unix-like environment with Bash
+- **Conda:** conda or mamba is required to install the pipeline dependencies
 
-SYMBIONT-SCREENER is a modular workflow for processing full-length 16S rRNA gene amplicons generated with Oxford Nanopore Technologies. The full bioinformatic analysis workflow was designed to process reads from each individual sample independently. The pipeline performs read quality control, trimming, taxonomic classification, consensus sequence generation and preliminary phylogenetic analysis. 
+## Installation
+The pipeline requires several software tools. Most of them are compatible and can be installed together in the same Conda environment. This can be done either using the provided .yml file or by installing the packages directly.
 
-<img width="1151" height="1186" alt="Supplementary Figure 1 - workflow" src="https://github.com/user-attachments/assets/db22f3b0-80a5-46d4-8faf-cb9c4cf40336" />
-
-## 2. Installation
-THIS SECTION IS STILL ON GOING - DO NOT FOLLOW IT
+Option 1 — using the environment file
 ```
-https://github.com/MIDIfactory/SYMBIONT-SCREENER.git
-cd GuanoPipeline
-conda env create -f environments/environment.yml
-conda activate guanopipeline
+git clone https://github.com/MIDIfactory/SYMBIO-SCAN.git
+cd SYMBIO-SCAN
+
+mamba env create -f environments/environment.yml
+```
+Option 2 — direct installation
+```
+mamba create -n symbio-scan -c conda-forge -c bioconda --strict-channel-priority fastqc=0.12.1 multiqc=1.31 nanoplot=1.46.1 fastplong=0.4.1 kraken2=2.1.6 bracken=3.1 krona=2.8.1 vsearch=2.30.0 minimap2=2.30 racon=1.5.0 emboss=6.6.0
+```
+The following tools must be installed separately from the Conda environment and made available in $PATH:
+```
+- BLAST 2.17.0
+- SeqKit 2.3.0
+- Samtools 1.19.2
+- MAFFT 7.505
+```
+They should be installed separately from the conda environment, as they may conflict with other tools. It is recommended that you add them to your `$PATH`, otherwise the pipeline will not be able to locate them. These versions are the ones used during development and are recommended for replicating the original configuration, but **other versions should also work**.
+
+Once the Conda environment is activated and the required tools are available in $PATH, the complete set of software used by the pipeline is:
+```
+fastqc	0.12.1
+multiqc	1.31
+NanoPlot	1.46.1
+fastplong	0.4.1
+kraken2	2.1.6
+bracken	3.1
+ktImportText	2.8.1 (part of krona)
+vsearch	2.30.0
+minimap2	2.30
+racon	1.5.0
+cons	6.6.0 (part of EMBOSS)
+blastn	2.17.0
+seqkit	2.3.0
+samtools	1.19.2
+mafft	7.505
 ```
 
-## 3. Quick start
+## Quick start
 
-To analysize your reads just run 
+Remember to activate the conda environment before running the pipeline: 
+```
+conda activate symbio-scan
+```
+
+To verify the pipeline is working:
 
 ```
-./guanopipeline -i <your_data_dir> 
-```
-
-By default a folder named ``<base_data_path>_SymbiontScreener_results`` will appear in your ``working_directory`` (to specify the out_dir use the -o option).
-
-
-Using the command 
-
-```
-./guano_pipeline.sh -h
+./symbio-scan.sh -h
 ```
 the pipeline usage will show up
 
 ```
-Usage: ./guano_pipeline.sh -i <data_path> [options]
+Usage: ./symbio-scan.sh -i <data_path> [options]
 
 Required:
   -i  Input directory containing FASTQ files
@@ -65,7 +95,9 @@ Module 2: Read trimming
 
 Module 5: Consensus sequence generation
   -l  Minimum read length to retain for consensus generation (default: 1000)
-  -I  OTU clustering percent identity (default: 97)
+  -c  First OTU clustering percent identity (default: 97)
+      NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
+  -C  Second OTU clustering percent identity (default: 97)
       NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
   -s  Minimum number of reads required to form a cluster (default: 10)
   -e  Allow correction outside the original consensus boundaries,
@@ -73,14 +105,28 @@ Module 5: Consensus sequence generation
       nucleotides
   -x  Use the reference sequence to resolve nucleotide mismatches (default: True)
   -g  Use the reference sequence to resolve gap positions (default: False)
-  -c  Collapse consensus sequences assigned to the same genus by
+  -G  Collapse consensus sequences assigned to the same genus by
       retaining only the largest cluster (default: True).
       Set to False to disable this filtering step.
 
   -h  Show this help message
 ```
+To test the pipeline
+```
+./symbio-scan -i test_data -o test_data_results 
+```
+To analysize your reads just run 
 
-## 4. Main outputs
+```
+./symbio-scan -i <your_data_dir> 
+```
+By default a folder named ``<base_data_path>_SymbiontScreener_results`` will appear in your ``working_directory`` (to specify the out_dir use the -o option).
+
+
+
+
+
+## Main outputs
 **Quality queck report**
 
 ``stats_pre_trimming.txt``: pre-procesing seqkit quality stats report of the reads 
@@ -130,26 +176,26 @@ es.
 
 
 
-## 5. Pipeline description
+## Pipeline description
 
-### 5.1 Quality assessment
+### Quality assessment
 
 Raw reads quality assessment is performed with FastQC (v0.12.1), multiqc (v1.31) and NanoPlot (v1.46.1). 
 
-### 5.2 Read trimming
+### Read trimming
 
 Read preprocessing is performed with fastplong (v0.4.1) to remove adapter sequences, low-quality regions, and reads outside the expected length range. Trimming and filtering parameters are optimized for long-read amplicon sequencing, including quality-based trimming at both read ends, removal of low-quality reads, and retention of reads between 500 and 2000 bp. 
 In particular the following parameters are used by default: reads shorter than 500 bp or longer than 2000 bp are discarded (--length_required 500 --length_limit 2000); the first 30 bases of each read are trimmed (--trim_front 30); sliding-window quality trimming is applied to both 5′ and 3′ ends (--cut_front --cut_front_window_size 3 --cut_front_mean_quality 25 --cut_tail --cut_tail_window_size 3 --cut_tail_mean_quality 25); bases with Phred quality scores below 15 are considered unqualified (--qualified_quality_phred 15); and reads with a mean Phred quality score below 20 are removed (--mean_qual 20).
 
-### 5.3 Post processing quality assessment
+### Post processing quality assessment
 
 Trimmed reads quality assessment is performed as previously described. 
 
-### 5.4 Bacterial community profiling 
+### Bacterial community profiling 
 
 Taxonomic classification of trimmed reads is performed using Kraken (v2.1.6) with the SILVA reference database (SILVA 138.1). Genus-level abundance estimates are subsequently refined using Bracken (v3.0.1). Taxonomic profiles are visualized with Krona (KronaTools v2.8.1). Only reads assigned by Kraken are retained for downstream analyses, whereas unclassified reads are discarded, as they often comprised non-specific amplification products, host-derived sequences or other sequencing artifacts. 
 
-### 5.5 Consensus generation
+### Consensus generation
 
 The Kraken classified sequences are oriented using vsearch (v2.30.0) and converted to fasta format using seqkit (v2.3.0). A preliminary chimera screening is performed with vsearch (v2.30.0) using the UCHIME_REF algorithm and the GOLD database as reference. Only sequences identified as chimeric are discarded, whereas borderline sequences are retained for downstream analyses. Length filtering is subsequently applied using seqkit to retain sequences at least 1000 bp long. 
 
@@ -161,6 +207,9 @@ As mentioned above, after the previously discussed polishing steps, some consens
 
 The final consensus sequences are reclassified taxonomically and screened again for chimeras as described above. Because some chimeric sequences may persist through the entire analysis pipeline, the final sequences assigned to the same genus are re-evaluated. When multiple consensus sequences belong to the same genus, the sequence with the smaller size (i.e., the lower number of reads contributing to that consensus sequence) is flagged as a potential chimera. This approach is based on the assumption that the co-occurrence of multiple bacterial taxa from the same genus within a sample is less likely than the presence of a chimeric artifact. The high-quality sequences obtained are used for the further phylogenetic analyses. 
 
-### 5.6 Preliminary phylogeny
+### Preliminary phylogeny
 
 The obtained high-quality sequences and the reference sequences used for their taxonomical classification are then very basically aligned with mafft (v7.505), trimmed with (v1.5.rev1) and a preliminary phylogenetic tree is inferred with iqtree2 (v2.0.7). 
+
+
+<img width="1151" height="1186" alt="Supplementary Figure 1 - workflow" src="https://github.com/user-attachments/assets/db22f3b0-80a5-46d4-8faf-cb9c4cf40336" />
