@@ -1,9 +1,8 @@
-name: guanopipeline
+name: symbio-scan
 
 channels:
-  - bioconda
   - conda-forge
-  - defaults
+  - bioconda
 
 dependencies:
   - fastqc=0.12.1
@@ -11,13 +10,9 @@ dependencies:
   - nanoplot=1.46.1
   - fastplong=0.4.1
   - kraken2=2.1.6
-  - bracken=3.0.1
-  - krona-tools=2.8.1
+  - bracken=3.1
+  - krona=2.8.1
   - vsearch=2.30.0
-  - seqkit=2.3.0
-  - samtools=1.19.2
   - minimap2=2.30
   - racon=1.5.0
-  - blast=2.17.0
-  - mafft=7.505
   - emboss=6.6.0
