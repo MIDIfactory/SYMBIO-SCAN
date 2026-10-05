@@ -1,7 +1,7 @@
 #!/bin/bash
 
 USAGE="
-Usage: ./guano_pipeline.sh -i <data_path> [options]
+Usage: ./symbio-scan.sh -i <data_path> [options]
 
 Required:
   -i  Input directory containing FASTQ files
@@ -122,7 +122,7 @@ run_module() {
 #::::::::::::::::::::::::::::::::::::::::::::::
 # WELCOME
 current_date_time="`date "+%Y-%m-%d %H:%M:%S"`";
-echo -e "\nHello world, welcome to the GuanoPipeline \nIt’s $current_date_time \nSomewhere Sun is shining, and rain is raining"
+echo -e "\nHello world, welcome to the SYMBIO-SCAN \nIt’s $current_date_time \nSomewhere Sun is shining, and rain is raining"
 
 cat <<'EOF'
 
@@ -214,7 +214,7 @@ echo "Log file saved in: $results/logs/LOG.txt"
 # Greetings
 current_date_time="`date "+%Y-%m-%d %H:%M:%S"`";
 echo ""
-echo "Bye Bye from guano_pipeline"
+echo "Bye Bye from SYMBIO-SCAN"
 echo "It’s $current_date_time"
 echo "Somewhere Sun is still shining, and rain is still raining"
 echo ""
