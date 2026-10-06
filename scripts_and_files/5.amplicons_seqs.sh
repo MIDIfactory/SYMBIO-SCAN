@@ -10,10 +10,15 @@ Optional:
   -o  Output directory (default: basename of input path)
   -l  Minimum read length to retain (default: 1000)
 
-  -I  OTU clustering percent identity (default: 97)
+  -c  First OTU clustering percent identity (default: 97)
       NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
 
-  -s  Minimum number of reads required to form a cluster (default: 10)
+  -C  Second OTU clustering percent identity (default: 97)
+      NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
+
+  -s  Minimum number of reads required to form a cluster in the first clustering step (default: 10)
+
+  -z  Minimum number of reads required to form a cluster in the second clustering step (default: 15)
 
   -e  Allow correction outside the original consensus boundaries,
       potentially extending the consensus using OTU-supported terminal
@@ -23,7 +28,7 @@ Optional:
 
   -g  Use the reference sequence to resolve gap positions (default: False)
 
-  -c  Collapse consensus sequences assigned to the same genus by
+  -G  Collapse consensus sequences assigned to the same genus by
       retaining only the largest cluster (default: True)
       Set to False to disable this filtering step.
 
@@ -34,17 +39,19 @@ Optional:
 "
 
 # Parse options
-while getopts "i:o:l:I:s:e:x:g:c:t:h" OPTION; do
+while getopts "i:o:l:c:C:s:z:e:x:g:G:t:h" OPTION; do
   case $OPTION in
         i) data_path=$OPTARG;;
         o) results=$OPTARG;;
         l) min_len=$OPTARG;;
-        I) id=$OPTARG;;
+        c) id_1=$OPTARG;;
+        C) id_2=$OPTARG;;
         s) min_size=$OPTARG;;
+        z) min_size_2=$OPTARG;;
         e) extend_ends=$OPTARG;;
         x) ref_mismatch=$OPTARG;;
         g) ref_gap=$OPTARG;;
-        c) collapse_genus=$OPTARG;;
+        G) collapse_genus=$OPTARG;;
         t) threads=$OPTARG;;
         h) echo "$USAGE"; exit 0;;
         :) printf "Missing argument for option -$OPTARG\n" >&2; exit 1;;
@@ -64,10 +71,14 @@ fi
 # Set defaults
 base_data_path=$(basename $data_path)
 [ -z "${results+x}" ] && results="${base_data_path}_SymbiontScreener_results"
+results_name=$(basename "$results")
 [ -z "${min_len+x}" ] && min_len=1000
-[ -z "${id+x}" ] && id=97
-perc_id="0.${id}"
+[ -z "${id_1+x}" ] && id_1=97
+perc_id_1="0.${id_1}"
+[ -z "${id_2+x}" ] && id_2=97
+perc_id_2="0.${id_2}"
 [ -z "${min_size+x}" ] && min_size=10
+[ -z "${min_size_2+x}" ] && min_size_2=15
 [ -z "${extend_ends+x}" ] && extend_ends=True
 [ -z "${ref_mismatch+x}" ] && ref_mismatch=True
 [ -z "${ref_gap+x}" ] && ref_gap=False
@@ -105,16 +116,22 @@ OTUs_out="$results/5.amplicons_seqs"
 mkdir -p "$OTUs_out"
 
 # Create the summary table output
-full_groups_summary="${OTUs_out}/${results}_full_groups_summary.tsv"
-touch
+full_groups_summary="${OTUs_out}/${results_name}_full_groups_summary.tsv"
+touch "${full_groups_summary}"
 
-full_sus_summary_list="${OTUs_out}/${results}_full_sus_summary_list.fasta"
-tocuh
+full_sus_summary_list="${OTUs_out}/${results_name}_full_sus_summary_list.fasta"
+touch "${full_sus_summary_list}"
 
-full_summary_list="${OTUs_out}/${results}_full_summary_list.fasta"
+full_small_size_summary_list="${OTUs_out}/${results_name}_full_small_size_summary_list.fasta"
+touch "${full_sus_summary_list}"
+
+full_summary_list="${OTUs_out}/${results_name}_full_summary_list.fasta"
 touch "${full_summary_list}"
 
-summary_table="${OTUs_out}/${results}_summary_table.tsv"
+stats="${OTUs_out}/${results_name}_clustering_stats.tsv"
+echo -e "sample\toriented\tINPUT_orient_nochim_reads\tinput_long_reads\t1_chim\t1_clust\t1_cons\t2_chim\t2_clust\t3_chim\tsus\tsmall_size\t2_cons" > "${stats}"
+
+summary_table="${OTUs_out}/${results_name}_summary_table.tsv"
 
 # Define scripts and databases
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -138,7 +155,7 @@ for file in "$data_path"/*.fastq; do
   echo "step 1. Orient sequences and convert fastq seqs in fasta"
 
   # Orient sequences
-  classified_fq="$results/4.kraken/kraken_filt/kraken/trimmed_${sample}.classified.fa"
+  classified_fq="$results/4.kraken/kraken_filt/kraken/trimmed_${sample}.classified.fq"
   oriented_out="$sample_out/1.oriented"
   mkdir -p "$oriented_out"
 
@@ -189,20 +206,20 @@ for file in "$data_path"/*.fastq; do
 
   echo "outputs saved in $trim_out"
 
-  # 4. Generate clusters represented by the longest seq as centroids (default 97)
+  # 4. First clustering - generate clusters represented by the longest seq as centroids (default 97)
   echo ""
-  echo "step 4. Generate clusters represented by the longest seq as centroids (default 97)"
+  echo "step 4. First clustering - generate clusters represented by the longest seq as centroids (default 97)"
 
-  centroids_out="$sample_out/4.centroids"
+  centroids_out="$sample_out/4.first_clustering"
   mkdir -p "$centroids_out"
   vsearch \
   --cluster_fast "$trim_out/${sample}_oriented_nochim_${min_len}.fasta" \
-  --id $perc_id \
+  --id "${perc_id_1}" \
   --relabel OTU_ \
   --sizeout \
-  --threads $threads  \
-  --centroids "$centroids_out/${sample}_oriented_nochim_${min_len}_otus_${id}.fasta" \
-  --uc "$centroids_out/${sample}_oriented_nochim_${min_len}_otus_${id}.uc"
+  --threads "$threads"  \
+  --centroids "$centroids_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}.fasta" \
+  --uc "$centroids_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}.uc"
 
   echo "outputs saved in $centroids_out"
 
@@ -210,12 +227,12 @@ for file in "$data_path"/*.fastq; do
   echo ""
   echo "step 5. Select only the clusters which are composed by a minimum size, which is the number of reads making a cluster (default 10)"
 
-  min_size_cluster="$sample_out/5.small_clusters"
+  min_size_cluster="$sample_out/5.size_filtered"
   mkdir -p "$min_size_cluster"
   vsearch \
-  --sortbysize "$centroids_out/${sample}_oriented_nochim_${min_len}_otus_${id}.fasta" \
+  --sortbysize "$centroids_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}.fasta" \
   --minsize "$min_size" \
-  --output "$min_size_cluster/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}.fasta"
+  --output "$min_size_cluster/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}.fasta"
 
   echo "outputs saved in $min_size_cluster"
 
@@ -229,9 +246,9 @@ for file in "$data_path"/*.fastq; do
   -ax map-ont \
   -K 1G \
   -t $threads \
-  "$min_size_cluster/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}.fasta" \
+  "$min_size_cluster/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}.fasta" \
   "$oriented_out/${sample}_oriented.fasta" \
-  > "$mapping_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}.sam"
+  > "$mapping_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}.sam"
 
   echo "outputs saved in $mapping_out"
 
@@ -243,10 +260,10 @@ for file in "$data_path"/*.fastq; do
   mkdir -p "$polishing_out"
   racon \
   "$oriented_out/${sample}_oriented.fasta" \
-  "$mapping_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}.sam" \
-  "$min_size_cluster/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}.fasta" \
+  "$mapping_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}.sam" \
+  "$min_size_cluster/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}.fasta" \
   -t $threads \
-  > "$polishing_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso.fasta"
+  > "$polishing_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso.fasta"
 
   echo "outputs saved in $polishing_out"
 
@@ -257,18 +274,18 @@ for file in "$data_path"/*.fastq; do
   second_chimera_out="$sample_out/8.second_ref_chimeras"
   mkdir -p "$second_chimera_out"
   vsearch \
-  --uchime_ref "$polishing_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso.fasta" \
-  --nonchimeras "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim.fasta" \
-  --chimeras "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_chimeras.fasta" \
-  --borderline "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_borderline.fasta" \
-  --uchimeout "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_uchime_stats.txt" \
+  --uchime_ref "$polishing_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso.fasta" \
+  --nonchimeras "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim.fasta" \
+  --chimeras "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_chimeras.fasta" \
+  --borderline "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_borderline.fasta" \
+  --uchimeout "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_uchime_stats.txt" \
   --db "$SILVA_GOLD" \
    --sizein
 
   echo "outputs saved in $second_chimera_out"
 
-  cat "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_borderline.fasta" \
-  >> "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim.fasta"
+  cat "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_borderline.fasta" \
+  >> "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim.fasta"
 
   # 9. Taxonomic classification of the consensus using SILVA
   echo ""
@@ -277,12 +294,12 @@ for file in "$data_path"/*.fastq; do
   tax_out="$sample_out/9.taxonomy_and_blast"
   mkdir -p "$tax_out"
   blastn \
-  -query "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim.fasta" \
+  -query "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim.fasta" \
   -db "$SILVA_DB" \
   -outfmt "6 qseqid sseqid stitle pident length mismatch gapopen qstart qend sstart send evalue bitscore" \
   -max_target_seqs 1 \
   -num_threads $threads \
-  > "$tax_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim_tax.txt"
+  > "$tax_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim_tax.txt"
 
   echo "outputs saved in $tax_out"
 
@@ -295,14 +312,14 @@ for file in "$data_path"/*.fastq; do
   ref_seqs="$sample_out/10.reference_based_trimming/ref_seqs"
   mkdir -p "$ref_seqs"
       > "$ref_seqs/reference_sequences.fasta"
-  cut -f2 "$tax_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim_tax.txt" | \
+  cut -f2 "$tax_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim_tax.txt" | \
   while IFS= read -r i; do
       samtools faidx "$SILVA_DB" "$i" \
         >> "$ref_seqs/reference_sequences.fasta"
   done
 
   # Retrieve the names of the reference sequences
-  cut -f2,3 "$tax_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim_tax.txt" | sort -u | \
+  cut -f2,3 "$tax_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim_tax.txt" | sort -u | \
   while read -r A B; do
       sed -i "s/$A/$B/g" "$ref_seqs/reference_sequences.fasta"
   done
@@ -314,7 +331,7 @@ for file in "$data_path"/*.fastq; do
   split_out="$ref_trim_out/splitted_seqs"
   mkdir -p "$split_out"
   seqkit split \
-  -i "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim.fasta" \
+  -i "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim.fasta" \
   -O "$split_out"
 
   # Use blastn to perform a pair-wise local alignment
@@ -342,33 +359,34 @@ for file in "$data_path"/*.fastq; do
   done
 
   # Ricomponiamo il multifasta
-  cat $blast_trim_out/trimmed_*.fasta > "$blast_trim_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim_ends_trimmed.fasta"
+  cat $blast_trim_out/trimmed_*.fasta > "$blast_trim_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim_ends_trimmed.fasta"
 
- # 11. Reference guided consensus generation and correction
+ # Reference guided consensus generation and correction
   echo ""
   echo "step 11. Reference guided consensus generation and correction"
 
-  otu_clustering="$sample_out/11.otu_clustering"
-  clusters_out="$otu_clustering/1.clustering"
-  align_out="$otu_clustering/2.alignment"
-  consensus_out="$otu_clustering/3.consensus"
-  final_otus="$otu_clustering/4.final_otus"
-  third_chimera_out="$otu_clustering/5.third_chimera_check"
+  
+  clusters_out="$sample_out/11.second_clustering"
+  cons_correction="$sample_out/12.cons_correction"
+  align_out="$cons_correction/1.alignment"
+  consensus_out="$cons_correction/2.consensus"
+  final_otus="$cons_correction/3.final_otus"
+  third_chimera_out="$sample_out/13.third_chimera_check"
 
-  mkdir -p "$otu_clustering" "$clusters_out" "$align_out" "$consensus_out" "$final_otus" "$third_chimera_out"
+  mkdir -p "$cons_correction" "$clusters_out" "$align_out" "$consensus_out" "$final_otus" "$third_chimera_out"
 
-  # 11.1 Second clustering step to collapse similar consensus
+  # 11 Second clustering - collapse similar consensus in the same cluster
   echo ""
-  echo "step 11.1. Second clustering step to collapse similar consensus"
+  echo "step 11. Second clustering - collapse similar consensus in the same cluster"
 
-  vsearch --cluster_fast "$blast_trim_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim_ends_trimmed.fasta" \
-  --id "$perc_id" \
+  vsearch --cluster_fast "$blast_trim_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim_ends_trimmed.fasta" \
+  --id "$perc_id_2" \
   --iddef 0 \
   --relabel OTU_ \
   --sizeout \
   --threads $threads \
-  --centroids "$clusters_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim_otus.fasta" \
-  --uc "$clusters_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim_otus.uc"
+  --centroids "$clusters_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_otus_${id_2}_consenso_nochim_otus.fasta" \
+  --uc "$clusters_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_otus_${id_2}_consenso_nochim_otus.uc"
 
   echo "outputs saved in $clusters_out"
 
@@ -376,8 +394,8 @@ for file in "$data_path"/*.fastq; do
   echo "running scripts_and_files/make_groups_tsv.py"
 
   python "$SCRIPT_DIR/make_groups_tsv.py" \
-  -u "$clusters_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim_otus.uc" \
-  -t "$tax_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim_tax.txt" \
+  -u "$clusters_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_otus_${id_2}_consenso_nochim_otus.uc" \
+  -t "$tax_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim_tax.txt" \
   -s "$sample" \
   -o "$clusters_out"
 
@@ -389,16 +407,16 @@ for file in "$data_path"/*.fastq; do
   echo "running scripts_and_files/sorting_cluster.py"
 
   python "$SCRIPT_DIR/sorting_cluster.py" \
-  -i "$blast_trim_out/${sample}_oriented_nochim_${min_len}_otus_${id}_min${min_size}_consenso_nochim_ends_trimmed.fasta" \
+  -i "$blast_trim_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_nochim_ends_trimmed.fasta" \
   -g "$clusters_out/${sample}_groups.tsv" \
   -s "$sample" \
   -o "$clusters_out"
 
   echo "files saved in $clusters_out"
 
-  # Start reference guided consensus generation and correction
+  # 12. Start reference guided consensus generation and correction
   echo ""
-  echo "Start reference guided consensus generation and correction"
+  echo "step 12. Start reference guided consensus generation and correction"
 
   # Process the clusters to get trimmed consensus
   touch "$final_otus/${sample}_final_otus.fasta"
@@ -415,18 +433,18 @@ for file in "$data_path"/*.fastq; do
      # Else create a consensus starting from at least two clusters
      else
 
-     # 11.2 Align the sequences
+     # 12.1 Align the sequences
      echo ""
-     echo "step 11.2. Align the sequences"
+     echo "step 12.1. Align the sequences"
 
      mafft --maxiterate 1000 --localpair "$cluster" > "$align_out/${cluster_name}.aln"
      cons -sequence "$align_out/${cluster_name}.aln" -outseq "$consensus_out/${cluster_name}_tmp_cons.fasta" -name "${cluster_name}"
      sed 's/n//g' "$consensus_out/${cluster_name}_tmp_cons.fasta" > "$consensus_out/${cluster_name}_cons.fasta"
      rm "$consensus_out/${cluster_name}_tmp_cons.fasta"
 
-     # 11.3 consensus generation and correciton
+     # 12.2 consensus generation and correciton
      echo ""
-     echo "step 11.3. consensus generation and correciton"
+     echo "step 12.2. consensus generation and correciton"
      # Taxonomic classification of the consensus
      blastn \
      -query "$consensus_out/${cluster_name}_cons.fasta" \
@@ -464,6 +482,7 @@ for file in "$data_path"/*.fastq; do
 
      # Consensus correction
      echo "Hello I'm running scripts_and_files/cons_correction.py"
+     # sequences_${cluster_name}.aln contains the reference, the consensus and the first-stage consensus making it
      python "$SCRIPT_DIR/cons_correction.py" \
      -i "${consensus_out}/sequences_${cluster_name}.aln" \
      -r "$ref" \
@@ -483,9 +502,9 @@ for file in "$data_path"/*.fastq; do
     fi
   done
 
-  # 11.4 Taxonomic classification of the final OTUs using SILVA
+  # 12.3 Taxonomic classification of the final OTUs using SILVA
   echo ""
-  echo "step 11.4 Taxonomic classification of the polished consensus sequences"
+  echo "step 12.3 Taxonomic classification of the polished consensus sequences"
 
   sed -i 's/_corrected//g' "$final_otus/${sample}_final_otus.fasta"
   blastn \
@@ -498,9 +517,9 @@ for file in "$data_path"/*.fastq; do
 
   echo "outputs saved in $align_out, $consensus_out and $final_otus"
 
-  # 11.5 Third round of chimera detection after polishing
+  # 13. Third round of chimera detection after polishing
   echo ""
-  echo "step 11.5 Third round of chimera detection after polishing"
+  echo "step 13. Third round of chimera detection after polishing"
 
   vsearch \
   --uchime_ref "$final_otus/${sample}_final_otus.fasta" \
@@ -511,11 +530,14 @@ for file in "$data_path"/*.fastq; do
   --db "$SILVA_GOLD" \
   --sizein
 
-  # 12. Gather everything in the final results folder and rename the files
-  echo ""
-  echo "step 12. Gather everything in the final results folder and rename the files"
+  # Keep borderline chimeric sequences
+  cat "$third_chimera_out/${sample}_final_otus_borderline.fasta" >> "$third_chimera_out/${sample}_final_otus_nochim.fasta"
 
-  final_seqs="$sample_out/12.final_sequences"
+  # 14. Gather everything in the final results folder and rename the files
+  echo ""
+  echo "step 14. Gather everything in the final results folder and rename the files"
+
+  final_seqs="$sample_out/14.final_sequences"
   mkdir "$final_seqs"
 
   # Rename the final OTUs file
@@ -527,24 +549,48 @@ for file in "$data_path"/*.fastq; do
   -g "$clusters_out/${sample}_groups.tsv" \
   -s "$sample" \
   -o "$final_seqs" \
-  -c "$collapse_genus"
+  -G "$collapse_genus" \
+  -z "$min_size_2"
 
-  echo "Renamed final OTUs written to $final_otus/${sample}_high_quality_seqs.fasta"
-  echo "Sus sequences written to $final_otus/${sample}_sus_sequences.fasta"
+  echo "Renamed final OTUs written to $final_seqs/${sample}_high_quality_seqs.fasta"
+  echo "Small-size sequences written to $final_seqs/${sample}_small_size_sequences.fasta"
+  echo "Sus sequences written to $final_seqs/${sample}_sus_sequences.fasta"
   
-  # Join the results from different samples in one table easy to reas in excel
+  # Join the results from different samples in one table easy to read in excel
+  echo "Concatenating"
   cat "$clusters_out/${sample}_groups.tsv" >> "${full_groups_summary}"
   cat "$final_seqs/${sample}_high_quality_seqs.fasta" >> "${full_summary_list}"
-  cat "$final_seqs/${sample}_sus_sequences.fasta.fasta" >> "${full_sus_summary_list}"
+  cat "$final_seqs/${sample}_small_size_sequences.fasta" >> "${full_small_size_summary_list}"
+  cat "$final_seqs/${sample}_sus_sequences.fasta" >> "${full_sus_summary_list}"
+
+  # Calculate the stats 
+  ORIENT=$(grep -c ">" "$oriented_out/${sample}_oriented.fasta")
+  INPUT_orient_nochim_reads=$(grep -c ">" "$first_chimera_out/${sample}_oriented_nochim.fasta")
+  INPUT_long_reads=$(grep -c ">" "$trim_out/${sample}_oriented_nochim_${min_len}.fasta")
+  CHIM_1=$(grep -c ">" "$first_chimera_out/${sample}_oriented_chimeras.fasta")
+  CLUST_1=$(grep -c ">" "$centroids_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}.fasta")
+  CONS_1=$(grep -c ">" "$polishing_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso.fasta")
+  CHIM_2=$(grep -c ">" "$second_chimera_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_consenso_chimeras.fasta")
+  CLUST_2=$(grep -c ">" "$clusters_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}_otus_${id_2}_consenso_nochim_otus.fasta")
+  CHIM_3=$(grep -c ">" "$third_chimera_out/${sample}_final_otus_chimeras.fasta")
+  SUS=$(grep -c ">" "$final_seqs/${sample}_sus_sequences.fasta")
+  SMALL_SIZE=$(grep -c ">" "$final_seqs/${sample}_small_size_sequences.fasta")
+  CONS_2=$(grep -c ">" "$final_seqs/${sample}_high_quality_seqs.fasta")
+
+  echo -e "${sample}\t${ORIENT}\t${INPUT_orient_nochim_reads}\t${INPUT_long_reads}\t${CHIM_1}\t${CLUST_1}\t${CONS_1}\t${CHIM_2}\t${CLUST_2}\t${CHIM_3}\t${SUS}\t${SMALL_SIZE}\t${CONS_2}" >> "${stats}"
+
+
 done
 
+echo "running scripts_and_files/summary_table.py"
 python "$SCRIPT_DIR/summary_table.py" \
 -i "${full_summary_list}" \
 -o "${summary_table}"
 
 # Create a folder for the more relevant results
+echo "copying results"
 mkdir -p "$results/main_outputs"
-cp "${full_groups_summary.tsv}" "$results/main_outputs/."
+cp "${full_groups_summary}" "$results/main_outputs/."
 cp "${full_sus_summary_list}" "$results/main_outputs/."
 cp "${full_summary_list}" "$results/main_outputs/."
 cp "${summary_table}" "$results/main_outputs/."
