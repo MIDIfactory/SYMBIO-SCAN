@@ -34,7 +34,8 @@ Module 5: Consensus sequence generation
       NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
   -C  Second OTU clustering percent identity (default: 97)
       NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
-  -s  Minimum number of reads required to form a cluster (default: 10)
+  -s  Minimum number of reads required to form a cluster in the first clusterinf (default: 10)
+  -z  Minimum number of reads required to form a cluster in the second clustering (default: 15)
   -e  Allow correction outside the original consensus boundaries,
       potentially extending the consensus using OTU-supported terminal
       nucleotides
@@ -48,7 +49,7 @@ Module 5: Consensus sequence generation
 "
 
 # Parse options
-while getopts "i:o:t:r:m:M:f:w:q:p:Q:l:c:C:s:e:x:g:G:h" OPTION; do
+while getopts "i:o:t:r:m:M:f:w:q:p:Q:l:c:C:s:z:e:x:g:G:h" OPTION; do
   case $OPTION in
         i) data_path=$OPTARG;;
         o) results=$OPTARG;;
@@ -69,6 +70,7 @@ while getopts "i:o:t:r:m:M:f:w:q:p:Q:l:c:C:s:e:x:g:G:h" OPTION; do
         c) id_1=$OPTARG;;
         C) id_2=$OPTARG;;
         s) min_size=$OPTARG;;
+        z) min_size_2=$OPTARG;;
         e) extend_ends=$OPTARG;;
         x) ref_mismatch=$OPTARG;;
         g) ref_gap=$OPTARG;;
@@ -90,7 +92,7 @@ if [ -z "${data_path+x}" ]; then
 fi
 
 # Set defaults
-[ -z "${threads+x}" ] && threads=12
+[ -z "${threads+x}" ] && threads=$(( $(nproc) > 1 ? $(nproc) - 1 : 1 ))
 base_data_path=$(basename "$data_path")
 [ -z "${results+x}" ] && results="${base_data_path}_symbio-scan_results"
 results_name=$(basename "$results")
@@ -110,6 +112,7 @@ results_name=$(basename "$results")
 [ -z "${id_1+x}" ] && id_1=97
 [ -z "${id_2+x}" ] && id_2=97
 [ -z "${min_size+x}" ] && min_size=10
+[ -z "${min_size_2+x}" ] && min_size_2=15
 [ -z "${extend_ends+x}" ] && extend_ends=True
 [ -z "${ref_mismatch+x}" ] && ref_mismatch=True
 [ -z "${ref_gap+x}" ] && ref_gap=False
@@ -182,6 +185,7 @@ bash "$SCRIPT_DIR/scripts_and_files/5.amplicons_seqs.sh" \
     -c "$id_1" \
     -C "$id_2" \
     -s "$min_size" \
+    -z "$min_size_2" \
     -e "$extend_ends" \
     -x "$ref_mismatch" \
     -g "$ref_gap" \
@@ -210,6 +214,8 @@ log_dir="$results/logs"
 cat "$log_dir"/*log*txt > "$log_dir/LOG.txt"
 echo ""
 echo "Log file saved in: $results/logs/LOG.txt"
+
+cp "$log_dir/LOG.txt" "$results/main_outputs"
 
 # Greetings
 current_date_time="`date "+%Y-%m-%d %H:%M:%S"`";
