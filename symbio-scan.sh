@@ -171,7 +171,7 @@ bash "$SCRIPT_DIR/scripts_and_files/3.quality_check_post_processing.sh" \
 fi
 
 if run_module 4; then
-bash "$SCRIPT_DIR/scripts_and_files/4.kraken_bracken.sh" \
+bash "$SCRIPT_DIR/scripts_and_files/4.kraken.sh" \
     -i "$data_path" \
     -o "$results" \
     -t "$threads"
