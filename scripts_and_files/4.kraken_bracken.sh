@@ -197,7 +197,7 @@ echo "=== Producing barplots ==="
 
 mkdir -p $results/4.kraken/kraken_raw/barplots
 
-python "$SCRIPT_DIR/plot_microbiome_raw.py" \
+python "$SCRIPT_DIR/plot_microbiome.py" \
     -i $results/4.kraken/kraken_raw/krona \
     -o $results/4.kraken/kraken_raw/barplots
 
@@ -210,7 +210,7 @@ echo "output saved in $results/4.kraken/kraken_raw/barplots/barplot_raw.pdf"
 
 mkdir -p $results/4.kraken/kraken_filt/barplots
 
-python "$SCRIPT_DIR/plot_microbiome_raw.py" \
+python "$SCRIPT_DIR/plot_microbiome.py" \
     -i $results/4.kraken/kraken_filt/krona \
     -o $results/4.kraken/kraken_filt/barplots
 
