@@ -37,6 +37,7 @@ fi
 [ -z "${threads+x}" ] && threads=12
 base_data_path=$(basename $data_path)
 [ -z "${results+x}" ] && results="${base_data_path}_SymbiontScreener_results"
+results_name=$(basename "$results")
 
 # Create output directory
 mkdir -p "$results"
@@ -75,12 +76,12 @@ mkdir -p "$out_QC" "$out_fastqc" "$out_multiqc" "$out_nanoplot"
 # Run seqkit
 echo ""
 echo "=== Running seqkit ==="
-seqkit stats "$data_path"/*.fastq | sed -E 's/ +/\t/g' > "$out_QC/stats_pre_trimming.txt"
+seqkit stats "$data_path"/*.fastq | sed -E 's/ +/\t/g' > "$out_QC/${results_name}_stats_pre_trimming.txt"
 
-cat "$out_QC/stats_pre_trimming.txt"
+cat "$out_QC/${results_name}_stats_pre_trimming.txt"
 
 echo ""
-echo "output saved in $out_QC/stats_pre_trimming.txt"
+echo "output saved in $out_QC/${results_name}_stats_pre_trimming.txt"
 
 # Run fastqc
 echo ""
@@ -97,9 +98,9 @@ echo "=== Running Multiqc ==="
 multiqc \
     "$out_fastqc"/*.zip \
     -o "$out_multiqc"
-mv "$out_multiqc/multiqc_report.html" "$out_multiqc/multiqc_pre_report.html"
+mv "$out_multiqc/multiqc_report.html" "$out_multiqc/${results_name}_multiqc_pre_report.html"
 echo ""
-echo "output saved in $out_multiqc/multiqc_pre_report.html"
+echo "output saved in $out_multiqc/${results_name}_multiqc_pre_report.html"
 
 # Run NanoPlot on individual samples
 echo ""
@@ -116,8 +117,8 @@ echo -e "\noutput saved in $out_nanoplot/$filename"
 
 # Create a folder for the more relevant results
 mkdir -p "$results/main_outputs"
-cp "$out_QC/stats_pre_trimming.txt" "$results/main_outputs/."
-cp "$out_multiqc/multiqc_pre_report.html" "$results/main_outputs/."
+cp "$out_QC/${results_name}_stats_pre_trimming.txt" "$results/main_outputs/."
+cp "$out_multiqc/${results_name}_multiqc_pre_report.html" "$results/main_outputs/."
 
 echo ""
 echo "==== PRE PROCESSING QUALITY CHECK ===="
