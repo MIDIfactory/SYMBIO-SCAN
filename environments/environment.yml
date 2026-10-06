@@ -10,9 +10,9 @@ dependencies:
   - nanoplot=1.46.1
   - fastplong=0.4.1
   - kraken2=2.1.6
-  - bracken=3.1
   - krona=2.8.1
   - vsearch=2.30.0
   - minimap2=2.30
   - racon=1.5.0
   - emboss=6.6.0
+  - trimal=1.5.0
