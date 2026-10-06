@@ -126,6 +126,7 @@ To analysize your reads just run
 ```
 By default a folder named ``<base_data_path>_SymbiontScreener_results`` will appear in your ``working_directory`` (to specify the out_dir use the -o option).
 
+NB: unzip your fastq files first
 
 ## Main outputs
 **Quality queck report**
