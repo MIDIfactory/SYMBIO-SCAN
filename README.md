@@ -10,7 +10,7 @@ SYMBIO-SCAN is a modular workflow for processing full-length 16S rRNA gene ampli
 - **Conda:** conda or mamba is required to install the pipeline dependencies
 
 ## Installation
-The pipeline requires several software tools. Most of them are compatible and can be installed together in the same Conda environment. This can be done either using the provided .yml file or by installing the packages directly.
+The pipeline requires several tools. Most of them are compatible and can be installed together in the same Conda environment. This can be done either using the provided .yml file or by installing the packages directly.
 
 Option 1 — using the environment file
 ```
@@ -21,7 +21,7 @@ mamba env create -f environments/environment.yml
 ```
 Option 2 — direct installation
 ```
-mamba create -n symbio-scan -c conda-forge -c bioconda --strict-channel-priority fastqc=0.12.1 multiqc=1.31 nanoplot=1.46.1 fastplong=0.4.1 kraken2=2.1.6 bracken=3.1 krona=2.8.1 vsearch=2.30.0 minimap2=2.30 racon=1.5.0 emboss=6.6.0
+mamba create -n symbio-scan -c conda-forge -c bioconda --strict-channel-priority fastqc=0.12.1 multiqc=1.31 nanoplot=1.46.1 fastplong=0.4.1 kraken2=2.1.6 krona=2.8.1 vsearch=2.30.0 minimap2=2.30 racon=1.5.0 emboss=6.6.0 trimal=1.5.0 
 ```
 The following tools must be installed separately from the Conda environment and made available in $PATH:
 ```
@@ -29,6 +29,7 @@ The following tools must be installed separately from the Conda environment and 
 - SeqKit 2.3.0
 - Samtools 1.19.2
 - MAFFT 7.505
+- iqtree2 2.0.7
 ```
 They should be installed separately from the conda environment, as they may conflict with other tools. It is recommended that you add them to your `$PATH`, otherwise the pipeline will not be able to locate them. These versions are the ones used during development and are recommended for replicating the original configuration, but **other versions should also work**.
 
@@ -39,7 +40,6 @@ multiqc	1.31
 NanoPlot	1.46.1
 fastplong	0.4.1
 kraken2	2.1.6
-bracken	3.1
 ktImportText	2.8.1 (part of krona)
 vsearch	2.30.0
 minimap2	2.30
@@ -49,6 +49,9 @@ blastn	2.17.0
 seqkit	2.3.0
 samtools	1.19.2
 mafft	7.505
+trimal  1.5.0
+iqtree2  2.0.7
+
 ```
 
 ## Quick start
@@ -99,7 +102,8 @@ Module 5: Consensus sequence generation
       NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
   -C  Second OTU clustering percent identity (default: 97)
       NOTE: specify values from 0 to 100 (e.g. 97), NOT decimals (e.g. 0.97)
-  -s  Minimum number of reads required to form a cluster (default: 10)
+  -s  Minimum number of reads required to form a cluster in the first clusterinf (default: 10)
+  -z  Minimum number of reads required to form a cluster in the second clustering (default: 15)
   -e  Allow correction outside the original consensus boundaries,
       potentially extending the consensus using OTU-supported terminal
       nucleotides
@@ -121,9 +125,6 @@ To analysize your reads just run
 ./symbio-scan -i <your_data_dir> 
 ```
 By default a folder named ``<base_data_path>_SymbiontScreener_results`` will appear in your ``working_directory`` (to specify the out_dir use the -o option).
-
-
-
 
 
 ## Main outputs
