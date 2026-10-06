@@ -215,5 +215,6 @@ The final consensus sequences are reclassified taxonomically and screened again 
 
 The obtained high-quality sequences and the reference sequences used for their taxonomical classification are then very basically aligned with mafft (v7.505), trimmed with (v1.5.rev1) and a preliminary phylogenetic tree is inferred with iqtree2 (v2.0.7). 
 
+## Pipeline overview
 
 <img width="1151" height="1186" alt="Supplementary Figure 1 - workflow" src="https://github.com/user-attachments/assets/db22f3b0-80a5-46d4-8faf-cb9c4cf40336" />
