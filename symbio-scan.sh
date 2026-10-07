@@ -215,7 +215,7 @@ cat "$log_dir"/*log*txt > "$log_dir/LOG.txt"
 echo ""
 echo "Log file saved in: $results/logs/LOG.txt"
 
-cp "$log_dir/LOG.txt" "$results/main_outputs"
+cp "$log_dir/LOG.txt" "$results/main_outputs/."
 
 # Greetings
 current_date_time="`date "+%Y-%m-%d %H:%M:%S"`";
