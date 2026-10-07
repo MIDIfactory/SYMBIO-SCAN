@@ -1,0 +1,4 @@
+file	num_seqs	sum_len	min_len	avg_len	max_len	num_seqs	sum_len	min_len	avg_len	max_len	unclassified_raw	classified_raw	P_raw	C_raw	O_raw	F_raw	G_raw	unclassified_filt	classified_filt	P_filt	C_filt	O_filt	F_filt	G_filt	oriented	INPUT_orient_nochim_reads	input_long_reads	1_chim	1_clust	1_cons	2_chim	2_clust	3_chim	sus	small_size	2_cons
+Bm5	4,056	1,850,899	100	456.3	2,555	1,169	1,067,326	500	913	1,466	1018	2535	15	17	35	30	42	48	1098	5	6	13	11	15	1112	1108	442	4	70	5	0	3	0	1	1	1
+HpRS1	5,738	3,456,394	100	602.4	8,238	2,476	2,249,823	500	908.7	1,739	275	5168	16	22	49	64	102	17	2437	7	8	14	24	35	2436	2394	925	42	188	5	0	2	0	0	0	2
+Lv2	1,068	650,543	100	609.1	4,768	498	475,000	501	953.8	1,631	129	863	9	11	26	35	52	13	481	7	8	17	20	32	480	471	224	9	42	3	0	2	0	0	0	2

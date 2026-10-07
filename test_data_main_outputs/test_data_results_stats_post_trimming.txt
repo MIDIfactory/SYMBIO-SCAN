@@ -1,0 +1,4 @@
+file	format	type	num_seqs	sum_len	min_len	avg_len	max_len
+test_data_results/2.trimming/trimmed/trimmed_Bm5.fastq	FASTQ	DNA	1,169	1,067,326	500	913	1,466
+test_data_results/2.trimming/trimmed/trimmed_HpRS1.fastq	FASTQ	DNA	2,476	2,249,823	500	908.7	1,739
+test_data_results/2.trimming/trimmed/trimmed_Lv2.fastq	FASTQ	DNA	498	475,000	501	953.8	1,631
