@@ -71,7 +71,7 @@ mkdir -p "$phylo_out"
 
 # Define databases
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-SILVA_DB="$SCRIPT_DIR/16S_DB/silva_db/SILVA_138.1_SSURef_NR99_tax_silva.fasta"
+SILVA_DB="$SCRIPT_DIR/16S_DB/SILVA138/data/SILVA_138.1_SSURef_NR99_tax_silva.fasta"
 
 # Process the samples all together
 for file in "$data_path"/*.fastq; do
