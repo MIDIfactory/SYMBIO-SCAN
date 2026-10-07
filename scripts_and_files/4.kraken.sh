@@ -68,7 +68,7 @@ echo ""
 
 # Define scripts and Kraken DB path
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-KRAKEN_DB="$SCRIPT_DIR/16S_DB/kraken_db"
+KRAKEN_DB="$SCRIPT_DIR/16S_DB/SILVA138"
 
 #########################################
 # Run Kraken2: raw reads (confidence 0.0)
