@@ -54,6 +54,18 @@ iqtree2  2.0.7
 
 ```
 
+Download the SILVA database and compile it for kraken2 and blast. NB: be sure to download the files in the "16_DB" folder.  
+```
+cd SYMBIO-SCAN/scripts_and_files/16S_DB
+
+conda activate symbio-scan
+
+kraken2-build --build --db SILVA138 --threads 6
+
+makeblastdb -in SILVA138/data/SILVA_138.1_SSURef_NR99_tax_silva.fasta -dbtype nucl 
+
+```
+
 ## Quick start
 
 Remember to activate the conda environment before running the pipeline: 
@@ -174,7 +186,7 @@ es.
 **Overall stats and logs**
 
 ``test_data_stats.tsv``: TSV file summarizing read/sequences counts across the entire pipeline, including input, trimmed, classified, clustered, chimera-filtered, and final reads
-ù
+
 ``LOG.txt``: comprehensive log of the modules run by the pipeline
 
 **Preliminary phylogeny**
