@@ -177,7 +177,7 @@ es.
 ù
 ``LOG.txt``: comprehensive log of the modules run by the pipeline
 
-**Rough preliminary phylogeny**
+**Preliminary phylogeny**
 
 ``test_data_results_preliminary_phylogeny.treefile``: treefile containing the preliminary taxonomy of the high-quality sequences and their reference sequences for each sample
 
