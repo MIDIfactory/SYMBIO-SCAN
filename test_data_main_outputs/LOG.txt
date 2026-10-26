@@ -1,0 +1,1710 @@
+=== PRE PROCESSING QUALITY CHECK STARTED ====
+Start time: Mon Oct 26 06:07:04 PM CET 2026
+Input data path: data/GitHub_test_data
+Output directory: guanopipeline_v6_results/GitHub_test_data/test_data/1.quality_check_pre_processing
+Threads: 11
+
+ __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)< 
+ \___)   \___)   \___)   \___)   \___)   \___)   \___)   \___)   
+quack quack quack quack quack quack quack quack quack quack quack
+
+
+=== Running seqkit ===
+file	format	type	num_seqs	sum_len	min_len	avg_len	max_len
+data/GitHub_test_data/Bm5.fastq	FASTQ	DNA	4056	1850899	100	456.3	2555
+data/GitHub_test_data/HpRS1.fastq	FASTQ	DNA	5738	3456394	100	602.4	8238
+data/GitHub_test_data/Lv2.fastq	FASTQ	DNA	1068	650543	100	609.1	4768
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/1.quality_check_pre_processing/test_data_stats_pre_trimming.txt
+
+=== Running Fastqc ===
+null
+Started analysis of Bm5.fastq
+Approx 20% complete for Bm5.fastq
+Approx 45% complete for Bm5.fastq
+Approx 70% complete for Bm5.fastq
+Approx 95% complete for Bm5.fastq
+Analysis complete for Bm5.fastq
+null
+Started analysis of HpRS1.fastq
+Approx 15% complete for HpRS1.fastq
+Approx 30% complete for HpRS1.fastq
+Approx 50% complete for HpRS1.fastq
+Approx 65% complete for HpRS1.fastq
+Approx 85% complete for HpRS1.fastq
+Analysis complete for HpRS1.fastq
+null
+Started analysis of Lv2.fastq
+Approx 90% complete for Lv2.fastq
+Analysis complete for Lv2.fastq
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/1.quality_check_pre_processing/fastqc
+
+=== Running Multiqc ===
+
+/// MultiQC 🎃 v1.31
+
+     version_check | MultiQC Version v1.35 now available!
+       file_search | Search path: /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6_results/GitHub_test_data/test_data/1.quality_check_pre_processing/fastqc/Bm5_fastqc.zip
+       file_search | Search path: /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6_results/GitHub_test_data/test_data/1.quality_check_pre_processing/fastqc/HpRS1_fastqc.zip
+       file_search | Search path: /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6_results/GitHub_test_data/test_data/1.quality_check_pre_processing/fastqc/Lv2_fastqc.zip
+
+            fastqc | Found 3 reports
+
+     write_results | Data        : guanopipeline_v6_results/GitHub_test_data/test_data/1.quality_check_pre_processing/multiqc/multiqc_data
+     write_results | Report      : guanopipeline_v6_results/GitHub_test_data/test_data/1.quality_check_pre_processing/multiqc/multiqc_report.html
+           multiqc | MultiQC complete
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/1.quality_check_pre_processing/multiqc/test_data_multiqc_pre_report.html
+
+=== Running NanoPlot ===
+WARNING:root:Plotly could not fetch or find Chrome automatically. Static exports may fail unless BROWSER_PATH is set. Details: 
+This command requires Kaleido v1.0.0 or greater.
+Install it using `pip install 'kaleido>=1.0.0'` or `pip install 'plotly[kaleido]'`."
+
+WARNING:root:Plotly could not fetch or find Chrome automatically. Static exports may fail unless BROWSER_PATH is set. Details: 
+This command requires Kaleido v1.0.0 or greater.
+Install it using `pip install 'kaleido>=1.0.0'` or `pip install 'plotly[kaleido]'`."
+
+WARNING:root:Plotly could not fetch or find Chrome automatically. Static exports may fail unless BROWSER_PATH is set. Details: 
+This command requires Kaleido v1.0.0 or greater.
+Install it using `pip install 'kaleido>=1.0.0'` or `pip install 'plotly[kaleido]'`."
+
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/1.quality_check_pre_processing/nanoplot/Lv2.fastq
+
+==== PRE PROCESSING QUALITY CHECK ====
+End time: Mon Oct 26 06:07:35 PM CET 2026
+Log file saved in: guanopipeline_v6_results/GitHub_test_data/test_data/logs/1.log_preprocessing_QC.txt
+
+
+==== TRIMMING STARTED ====
+Start time: Mon Oct 26 06:07:35 PM CET 2026
+Input data path: data/GitHub_test_data
+Output directory: guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming
+Threads: 11
+
+ __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)< 
+ \___)   \___)   \___)   \___)   \___)   \___)   \___)   \___)   
+quack quack quack quack quack quack quack quack quack quack quack
+
+
+=== Running fastplong trimming ===
+Trying to detect adapter sequence at read start
+Not detected
+Trying to detect adapter sequence at read end
+Detected: CAATAGTTATTCCGTACTGCAAGGTAGATTCCCATGTATTACTCACCCGTTTGCCACTAAAATA
+
+Before filtering:
+total reads: 4056
+total bases: 1850899
+Q20 bases: 1668255(90.1321%)
+Q30 bases: 1504632(81.292%)
+
+After filtering:
+total reads: 1169
+total bases: 1067326
+Q20 bases: 996631(93.3764%)
+Q30 bases: 916602(85.8784%)
+
+Filtering result:
+reads passed filter: 1169
+reads failed due to low quality: 35
+reads failed due to too many N: 0
+reads failed due to too short: 2860
+reads failed due to too long: 0
+reads with adapter trimmed: 760
+bases trimmed due to adapters: 104359
+
+JSON report: guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_Bm5.fastq.json
+HTML report: guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_Bm5.fastq.html
+
+fastplong -i data/GitHub_test_data/Bm5.fastq -o guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/trimmed/trimmed_Bm5.fastq --failed_out guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/fail/failed_trimming.Bm5.fastq --length_required 500 --length_limit 2000 --trim_front 30 --cut_front --cut_front_window_size 3 --cut_front_mean_quality 25 --cut_tail --cut_tail_window_size 3 --cut_tail_mean_quality 25 --qualified_quality_phred 15 --mean_qual 20 --thread 11 --html guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_Bm5.fastq.html --json guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_Bm5.fastq.json 
+fastplong v0.4.1, time used: 0 seconds
+Trying to detect adapter sequence at read start
+Not detected
+Trying to detect adapter sequence at read end
+Detected: ACTTGCATGTGTTAGGC
+
+Before filtering:
+total reads: 5738
+total bases: 3456394
+Q20 bases: 2919791(84.4751%)
+Q30 bases: 2470144(71.4659%)
+
+After filtering:
+total reads: 2476
+total bases: 2249823
+Q20 bases: 1980962(88.0497%)
+Q30 bases: 1711974(76.0937%)
+
+Filtering result:
+reads passed filter: 2476
+reads failed due to low quality: 130
+reads failed due to too many N: 0
+reads failed due to too short: 3122
+reads failed due to too long: 10
+reads with adapter trimmed: 1697
+bases trimmed due to adapters: 73861
+
+JSON report: guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_HpRS1.fastq.json
+HTML report: guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_HpRS1.fastq.html
+
+fastplong -i data/GitHub_test_data/HpRS1.fastq -o guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/trimmed/trimmed_HpRS1.fastq --failed_out guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/fail/failed_trimming.HpRS1.fastq --length_required 500 --length_limit 2000 --trim_front 30 --cut_front --cut_front_window_size 3 --cut_front_mean_quality 25 --cut_tail --cut_tail_window_size 3 --cut_tail_mean_quality 25 --qualified_quality_phred 15 --mean_qual 20 --thread 11 --html guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_HpRS1.fastq.html --json guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_HpRS1.fastq.json 
+fastplong v0.4.1, time used: 0 seconds
+Trying to detect adapter sequence at read start
+Not detected
+Trying to detect adapter sequence at read end
+Not detected
+
+Before filtering:
+total reads: 1068
+total bases: 650543
+Q20 bases: 578900(88.9872%)
+Q30 bases: 519128(79.7992%)
+
+After filtering:
+total reads: 498
+total bases: 475000
+Q20 bases: 435697(91.7257%)
+Q30 bases: 396595(83.4937%)
+
+Filtering result:
+reads passed filter: 498
+reads failed due to low quality: 10
+reads failed due to too many N: 0
+reads failed due to too short: 558
+reads failed due to too long: 1
+reads with adapter trimmed: 0
+bases trimmed due to adapters: 0
+
+JSON report: guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_Lv2.fastq.json
+HTML report: guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_Lv2.fastq.html
+
+fastplong -i data/GitHub_test_data/Lv2.fastq -o guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/trimmed/trimmed_Lv2.fastq --failed_out guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/fail/failed_trimming.Lv2.fastq --length_required 500 --length_limit 2000 --trim_front 30 --cut_front --cut_front_window_size 3 --cut_front_mean_quality 25 --cut_tail --cut_tail_window_size 3 --cut_tail_mean_quality 25 --qualified_quality_phred 15 --mean_qual 20 --thread 11 --html guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_Lv2.fastq.html --json guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/report/fastplong_report_Lv2.fastq.json 
+fastplong v0.4.1, time used: 0 seconds
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/trimmed
+
+==== TRIMMING COMPLETED ====
+End time: Mon Oct 26 06:07:35 PM CET 2026
+Log file saved in: guanopipeline_v6_results/GitHub_test_data/test_data/logs/2.log_trimming.txt
+
+
+
+==== POST PROCESSING QUALITY CHECK STARTED ====
+Start time: Mon Oct 26 06:07:35 PM CET 2026
+Input data path: data/GitHub_test_data
+Output directory: guanopipeline_v6_results/GitHub_test_data/test_data/3.quality_check_post_processing
+Threads: 11
+
+ __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)< 
+ \___)   \___)   \___)   \___)   \___)   \___)   \___)   \___)   
+quack quack quack quack quack quack quack quack quack quack quack
+
+
+=== Running seqkit ===
+file	format	type	num_seqs	sum_len	min_len	avg_len	max_len
+guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/trimmed/trimmed_Bm5.fastq	FASTQ	DNA	1169	1067326	500	913.0	1466
+guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/trimmed/trimmed_HpRS1.fastq	FASTQ	DNA	2476	2249823	500	908.7	1739
+guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/trimmed/trimmed_Lv2.fastq	FASTQ	DNA	498	475000	501	953.8	1631
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/3.quality_check_post_processing/test_data_stats_post_trimming.txt
+
+=== Running Fastqc ===
+null
+Started analysis of trimmed_Bm5.fastq
+Approx 85% complete for trimmed_Bm5.fastq
+Analysis complete for trimmed_Bm5.fastq
+null
+Started analysis of trimmed_HpRS1.fastq
+Approx 40% complete for trimmed_HpRS1.fastq
+Approx 80% complete for trimmed_HpRS1.fastq
+Analysis complete for trimmed_HpRS1.fastq
+null
+Started analysis of trimmed_Lv2.fastq
+Analysis complete for trimmed_Lv2.fastq
+
+=== Running Multiqc ===
+
+/// MultiQC 🎃 v1.31
+
+     version_check | MultiQC Version v1.35 now available!
+       file_search | Search path: /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6_results/GitHub_test_data/test_data/3.quality_check_post_processing/fastqc/trimmed_Bm5_fastqc.zip
+       file_search | Search path: /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6_results/GitHub_test_data/test_data/3.quality_check_post_processing/fastqc/trimmed_HpRS1_fastqc.zip
+       file_search | Search path: /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6_results/GitHub_test_data/test_data/3.quality_check_post_processing/fastqc/trimmed_Lv2_fastqc.zip
+
+            fastqc | Found 3 reports
+
+     write_results | Data        : guanopipeline_v6_results/GitHub_test_data/test_data/3.quality_check_post_processing/multiqc/multiqc_data
+     write_results | Report      : guanopipeline_v6_results/GitHub_test_data/test_data/3.quality_check_post_processing/multiqc/multiqc_report.html
+           multiqc | MultiQC complete
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/3.quality_check_post_processing/multiqc/test_data_multiqc_post_report.html
+
+=== Running NanoPlot ===
+WARNING:root:Plotly could not fetch or find Chrome automatically. Static exports may fail unless BROWSER_PATH is set. Details: 
+This command requires Kaleido v1.0.0 or greater.
+Install it using `pip install 'kaleido>=1.0.0'` or `pip install 'plotly[kaleido]'`."
+
+WARNING:root:Plotly could not fetch or find Chrome automatically. Static exports may fail unless BROWSER_PATH is set. Details: 
+This command requires Kaleido v1.0.0 or greater.
+Install it using `pip install 'kaleido>=1.0.0'` or `pip install 'plotly[kaleido]'`."
+
+WARNING:root:Plotly could not fetch or find Chrome automatically. Static exports may fail unless BROWSER_PATH is set. Details: 
+This command requires Kaleido v1.0.0 or greater.
+Install it using `pip install 'kaleido>=1.0.0'` or `pip install 'plotly[kaleido]'`."
+
+
+==== QUALITY CHECK COMPLETED ====
+End time: Mon Oct 26 06:08:03 PM CET 2026
+Log file saved in: guanopipeline_v6_results/GitHub_test_data/test_data/logs/3.log_postprocessing_QC.txt
+
+
+
+==== KRAKEN TAXONOMIC ASSIGNMENT STARTED ====
+Start time: Mon Oct 26 06:08:03 PM CET 2026
+Input path: data/GitHub_test_data
+Output directory: guanopipeline_v6_results/GitHub_test_data/test_data
+
+ __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<
+ \___)   \___)   \___)   \___)   \___)   \___)   \___)   \___)
+quack quack quack quack quack quack quack quack quack quack quack
+
+
+=== Running Kraken2 on raw reads (confidence 0.0) ===
+Loading database information... done.
+4056 sequences (1.85 Mbp) processed in 0.171s (1419.3 Kseq/m, 647.68 Mbp/m).
+  2826 sequences classified (69.67%)
+  1230 sequences unclassified (30.33%)
+Loading database information... done.
+5738 sequences (3.46 Mbp) processed in 0.271s (1270.6 Kseq/m, 765.37 Mbp/m).
+  5437 sequences classified (94.75%)
+  301 sequences unclassified (5.25%)
+Loading database information... done.
+1068 sequences (0.65 Mbp) processed in 0.061s (1045.0 Kseq/m, 636.55 Mbp/m).
+  923 sequences classified (86.42%)
+  145 sequences unclassified (13.58%)
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/4.kraken/kraken_raw/kraken
+
+=== Generating Krona input ===
+=== Generating Krona HTML visualization ===
+Writing guanopipeline_v6_results/GitHub_test_data/test_data/4.kraken/kraken_raw/krona/test_data_krona_raw.html...
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/4.kraken/kraken_raw/krona/test_data_krona_raw.html
+
+=== Running Kraken2 on filtered reads (confidence 0.0) ===
+Loading database information... done.
+1169 sequences (1.07 Mbp) processed in 0.098s (716.2 Kseq/m, 653.89 Mbp/m).
+  1120 sequences classified (95.81%)
+  49 sequences unclassified (4.19%)
+Loading database information... done.
+2476 sequences (2.25 Mbp) processed in 0.202s (735.4 Kseq/m, 668.22 Mbp/m).
+  2459 sequences classified (99.31%)
+  17 sequences unclassified (0.69%)
+Loading database information... done.
+498 sequences (0.47 Mbp) processed in 0.045s (669.8 Kseq/m, 638.84 Mbp/m).
+  485 sequences classified (97.39%)
+  13 sequences unclassified (2.61%)
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/4.kraken/kraken_filt/kraken
+
+=== Generating Krona input ===
+=== Generating Krona HTML visualization ===
+Writing guanopipeline_v6_results/GitHub_test_data/test_data/4.kraken/kraken_filt/krona/test_data_krona_filt.html...
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/4.kraken/kraken_filt/krona/test_data_krona_filt.html
+
+=== Producing barplots ===
+Plot saved to guanopipeline_v6_results/GitHub_test_data/test_data/4.kraken/kraken_raw/barplots/stacked_barplot_top30.pdf
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/4.kraken/kraken_raw/barplots/barplot_raw.pdf
+Plot saved to guanopipeline_v6_results/GitHub_test_data/test_data/4.kraken/kraken_filt/barplots/stacked_barplot_top30.pdf
+
+output saved in guanopipeline_v6_results/GitHub_test_data/test_data/4.kraken/kraken_filt/barplots/barplot_top30_filt.pdf
+
+==== KRAKEN COMPLETED ====
+End time: Mon Oct 26 06:08:22 PM CET 2026
+Log file saved in: guanopipeline_v6_results/GitHub_test_data/test_data/logs/4.log_kraken.txt
+
+
+This is 5.amplicons_seqs.sh
+==== HIGH QUALITY OTUs GENERATION ====
+Start time: Mon Oct 26 06:08:22 PM CET 2026
+Input data path: data/GitHub_test_data
+Output directory: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs
+Threads: 11
+
+ __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<
+ \___)   \___)   \___)   \___)   \___)   \___)   \___)   \___)
+quack quack quack quack quack quack quack quack quack quack quack
+
+
+###########################
+Processing sample: Bm5
+
+step 1. Orient sequences and convert fastq seqs in fasta
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/silva_subset_100.fasta 100%
+404046 nt in 278 seqs, min 900, max 2099, avg 1453
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Orienting sequences 100%
+Forward oriented sequences: 589 (52.59%)
+Reverse oriented sequences: 523 (46.70%)
+All oriented sequences:     1112 (99.29%)
+Not oriented sequences:     8 (0.71%)
+Total number of sequences:  1120
+
+Convert fastq seqs in fasta
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/1.oriented
+
+step 2. Chimera detection
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/gold.fasta 100%
+7438266 nt in 5181 seqs, min 1205, max 1585, avg 1436
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Detecting chimeras 100%
+Found 4 (0.4%) chimeras, 1105 (99.4%) non-chimeras,
+and 3 (0.3%) borderline sequences in 1112 unique sequences.
+Taking abundance information into account, this corresponds to
+4 (0.4%) chimeras, 1105 (99.4%) non-chimeras,
+and 3 (0.3%) borderline sequences in 1112 total sequences.
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/2.first_ref_chimeras
+
+step 3. Trimming of the short reads to improve the subsequent clustering (default 1000)
+[33m[WARN][0m you may switch on flag -g/--remove-gaps to remove spaces
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/3.trimming
+
+step 4. First clustering - generate clusters represented by the longest seq as centroids (default 97)
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/3.trimming/Bm5_oriented_nochim_1000.fasta 100%
+529637 nt in 442 seqs, min 1000, max 1466, avg 1198
+Masking 100%
+Sorting by length 100%
+Counting k-mers 100%
+Clustering 100%
+Sorting clusters 100%
+Writing clusters 100%
+Clusters: 70 Size min 1, max 171, avg 6.3
+Singletons: 55, 12.4% of seqs, 78.6% of clusters
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/4.first_clustering
+
+step 5. Select only the clusters which are composed by a minimum size, which is the number of reads making a cluster (default 10)
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/4.first_clustering/Bm5_oriented_nochim_1000_otus_97.fasta 100%
+84367 nt in 70 seqs, min 1010, max 1466, avg 1205
+Getting sizes 100%
+Sorting 100%
+Median abundance: 31
+Writing output 100%
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/5.size_filtered
+
+step 6. Mapping of the reads in the centroids (also the reads < 1000 bp)
+[M::mm_idx_gen::0.001*2.21] collected minimizers
+[M::mm_idx_gen::0.002*4.81] sorted minimizers
+[M::main::0.002*4.78] loaded/built the index for 5 target sequence(s)
+[M::mm_mapopt_update::0.002*4.60] mid_occ = 10
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 5
+[M::mm_idx_stat::0.002*4.46] distinct minimizers: 559 (50.45% are singletons); average occurrences: 2.193; average spacing: 5.567; total length: 6825
+[M::worker_pipeline::0.180*10.40] mapped 1108 sequences
+[M::main] Version: 2.30-r1287
+[M::main] CMD: minimap2 -ax map-ont -K 1G -t 11 guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/5.size_filtered/Bm5_oriented_nochim_1000_otus_97_min10.fasta guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/2.first_ref_chimeras/Bm5_oriented_nochim.fasta
+[M::main] Real time: 0.180 sec; CPU: 1.873 sec; Peak RSS: 0.012 GB
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/6.mapping
+
+step 7. Polishing and consensus generation
+[racon::Polisher::initialize] loaded target sequences 0.000061 s
+[racon::Polisher::initialize] loaded sequences 0.004763 s
+[racon::Polisher::initialize] loaded overlaps 0.005963 s
+[racon::Polisher::initialize] aligning overlaps [=>                  ] 0.004362 s[racon::Polisher::initialize] aligning overlaps [==>                 ] 0.004371 s[racon::Polisher::initialize] aligning overlaps [===>                ] 0.004377 s[racon::Polisher::initialize] aligning overlaps [====>               ] 0.004383 s[racon::Polisher::initialize] aligning overlaps [=====>              ] 0.004390 s[racon::Polisher::initialize] aligning overlaps [======>             ] 0.004396 s[racon::Polisher::initialize] aligning overlaps [=======>            ] 0.004402 s[racon::Polisher::initialize] aligning overlaps [========>           ] 0.004408 s[racon::Polisher::initialize] aligning overlaps [=========>          ] 0.004414 s[racon::Polisher::initialize] aligning overlaps [==========>         ] 0.004429 s[racon::Polisher::initialize] aligning overlaps [===========>        ] 0.004436 s[racon::Polisher::initialize] aligning overlaps [============>       ] 0.004442 s[racon::Polisher::initialize] aligning overlaps [=============>      ] 0.004448 s[racon::Polisher::initialize] aligning overlaps [==============>     ] 0.004454 s[racon::Polisher::initialize] aligning overlaps [===============>    ] 0.004460 s[racon::Polisher::initialize] aligning overlaps [================>   ] 0.004466 s[racon::Polisher::initialize] aligning overlaps [=================>  ] 0.004472 s[racon::Polisher::initialize] aligning overlaps [==================> ] 0.004479 s[racon::Polisher::initialize] aligning overlaps [===================>] 0.004485 s[racon::Polisher::initialize] aligning overlaps [====================] 0.004491 s
+[racon::Polisher::initialize] transformed data into windows 0.000383 s
+[racon::Polisher::polish] generated consensus 0.555985 s
+[racon::Polisher::] total = 0.572189 s
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/7.polishing
+
+step 8. Second round of chimera detection after polishing
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/gold.fasta 100%
+7438266 nt in 5181 seqs, min 1205, max 1585, avg 1436
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 5 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 5 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 352 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 352 total sequences.
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/8.second_ref_chimeras
+
+step 9. Taxonomic classification of the consensus using SILVA
+Warning: [blastn] Examining 5 or more matches is recommended
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/9.taxonomy_and_blast
+
+step 10. Reference based trimming
+
+
+Building a new DB, current time: 10/26/2026 18:08:49
+New DB name:   /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/10.reference_based_trimming/ref_seqs/reference_sequences.fasta
+New DB title:  guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/10.reference_based_trimming/ref_seqs/reference_sequences.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 5 sequences in 0.0007689 seconds.
+
+
+[INFO][0m split by ID. idRegexp: ^(\S+)\s?
+[INFO][0m read sequences ...
+[INFO][0m read 5 sequences
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/10.reference_based_trimming/splitted_seqs/Bm5_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_15;size=31.fasta
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/10.reference_based_trimming/splitted_seqs/Bm5_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_6;size=10.fasta
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/10.reference_based_trimming/splitted_seqs/Bm5_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_8;size=129.fasta
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/10.reference_based_trimming/splitted_seqs/Bm5_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_2;size=171.fasta
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/10.reference_based_trimming/splitted_seqs/Bm5_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_4;size=11.fasta
+
+step 11. Reference guided consensus generation and correction
+
+step 11. Second clustering - collapse similar consensus in the same cluster
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/10.reference_based_trimming/blast_trim_out/Bm5_oriented_nochim_1000_otus_97_min10_consenso_nochim_ends_trimmed.fasta 100%
+6403 nt in 5 seqs, min 1159, max 1375, avg 1281
+Masking 100%
+Sorting by length 100%
+Counting k-mers 100%
+Clustering 100%
+Sorting clusters 100%
+Writing clusters 100%
+Clusters: 3 Size min 1, max 3, avg 1.7
+Singletons: 2, 40.0% of seqs, 66.7% of clusters
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/11.second_clustering
+running scripts_and_files/make_groups_tsv.py
+groups.tsv written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/11.second_clustering/Bm5_groups.tsv (5 rows)
+
+file Bm5_groups.tsv saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/11.second_clustering
+
+running scripts_and_files/sorting_cluster.py
+Wrote guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/11.second_clustering/Bm5_cluster_0.fasta
+Wrote guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/11.second_clustering/Bm5_cluster_1.fasta
+Wrote guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/11.second_clustering/Bm5_cluster_2.fasta
+files saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/11.second_clustering
+
+step 12. Start reference guided consensus generation and correction
+
+step 12.1. Align the sequences
+outputhat23=16
+treein = 0
+compacttree = 0
+stacksize: 8192 kb
+generating a scoring matrix for nucleotide (dist=200) ... done
+All-to-all alignment.
+    0 / 3    1 / 3tbfast-pair (nuc) Version 7.505
+alg=L, model=DNA200 (2), 2.00 (6.00), -0.10 (-0.30), noshift, amax=0.0
+0 thread(s)
+
+outputhat23=16
+Loading 'hat3.seed' ... 
+done.
+Writing hat3 for iterative refinement
+generating a scoring matrix for nucleotide (dist=200) ... done
+Gap Penalty = -1.53, +0.00, +0.00
+tbutree = 1, compacttree = 0
+Constructing a UPGMA tree ... 
+    0 / 3
+done.
+
+Progressive alignment ... 
+STEP     1 /2 STEP     2 /2 
+done.
+tbfast (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+1 thread(s)
+
+minimumweight = 0.000010
+autosubalignment = 0.000000
+nthread = 0
+randomseed = 0
+blosum 62 / kimura 200
+poffset = 0
+niter = 16
+sueff_global = 0.100000
+nadd = 16
+Loading 'hat3' ... done.
+generating a scoring matrix for nucleotide (dist=200) ... done
+
+    0 / 3
+Segment   1/  1    1-1315
+STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-1  identical.   STEP 002-002-1  identical.   STEP 002-001-0  identical.   STEP 002-001-1  identical.   
+Converged.
+
+done
+dvtditr (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+0 thread(s)
+
+
+Strategy:
+ L-INS-i (Probably most accurate, very slow)
+ Iterative refinement method (<16) with LOCAL pairwise alignment information
+
+If unsure which option to use, try 'mafft --auto input > output'.
+For more information, see 'mafft --help', 'mafft --man' and the mafft page.
+
+The default gap scoring scheme has been changed in version 7.110 (2013 Oct).
+It tends to insert more gaps into gap-rich regions than previous versions.
+To disable this change, add the --leavegappyregion option.
+
+Create a consensus sequence from a multiple alignment
+
+step 12.2. consensus generation and correciton
+Warning: [blastn] Examining 5 or more matches is recommended
+[W::fai_insert_index] Ignoring duplicate sequence "AB624350.1.1421" at byte offset 1729
+[W::fai_insert_index] Ignoring duplicate sequence "AB624350.1.1421" at byte offset 3313
+[W::fai_insert_index] Ignoring duplicate sequence "AB624350.1.1421" at byte offset 4897
+outputhat23=16
+treein = 0
+compacttree = 0
+stacksize: 8192 kb
+generating a scoring matrix for nucleotide (dist=200) ... done
+All-to-all alignment.
+    0 / 5    1 / 5    2 / 5    3 / 5tbfast-pair (nuc) Version 7.505
+alg=L, model=DNA200 (2), 2.00 (6.00), -0.10 (-0.30), noshift, amax=0.0
+0 thread(s)
+
+outputhat23=16
+Loading 'hat3.seed' ... 
+done.
+Writing hat3 for iterative refinement
+generating a scoring matrix for nucleotide (dist=200) ... done
+Gap Penalty = -1.53, +0.00, +0.00
+tbutree = 1, compacttree = 0
+Constructing a UPGMA tree ... 
+    0 / 5
+done.
+
+Progressive alignment ... 
+STEP     1 /4 STEP     2 /4 STEP     3 /4 STEP     4 /4 
+done.
+tbfast (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+1 thread(s)
+
+minimumweight = 0.000010
+autosubalignment = 0.000000
+nthread = 0
+randomseed = 0
+blosum 62 / kimura 200
+poffset = 0
+niter = 16
+sueff_global = 0.100000
+nadd = 16
+Loading 'hat3' ... done.
+generating a scoring matrix for nucleotide (dist=200) ... done
+
+    0 / 5
+Segment   1/  1    1-1423
+STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  identical.   STEP 001-002-1  identical.   STEP 001-003-0  rejected.STEP 001-003-1  rejected.STEP 001-004-1  identical.   STEP 002-004-1  identical.   STEP 002-003-0  rejected.STEP 002-003-1  rejected.
+Converged.
+
+done
+dvtditr (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+0 thread(s)
+
+
+Strategy:
+ L-INS-i (Probably most accurate, very slow)
+ Iterative refinement method (<16) with LOCAL pairwise alignment information
+
+If unsure which option to use, try 'mafft --auto input > output'.
+For more information, see 'mafft --help', 'mafft --man' and the mafft page.
+
+The default gap scoring scheme has been changed in version 7.110 (2013 Oct).
+It tends to insert more gaps into gap-rich regions than previous versions.
+To disable this change, add the --leavegappyregion option.
+
+[INFO][0m read sequences ...
+[INFO][0m 5 sequences loaded
+[INFO][0m sorting ...
+[INFO][0m output ...
+Hello I'm running scripts_and_files/cons_correction.py
+
+step 12.3 Taxonomic classification of the polished consensus sequences
+Warning: [blastn] Examining 5 or more matches is recommended
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/12.cons_correction/1.alignment, guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/12.cons_correction/2.consensus and guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/12.cons_correction/3.final_otus
+
+step 13. Third round of chimera detection after polishing
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/gold.fasta 100%
+7438266 nt in 5181 seqs, min 1205, max 1585, avg 1436
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 3 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 3 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 3 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 3 total sequences.
+
+step 14. Gather everything in the final results folder and rename the files
+running scripts_and_files/final_otus_header_rename.py
+Renamed final OTUs written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/14.final_sequences/Bm5_high_quality_seqs.fasta
+Sus sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/14.final_sequences/Bm5_sus_sequences.fasta
+Small-size sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/14.final_sequences/Bm5_small_size_sequences.fasta
+Renamed final OTUs written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/14.final_sequences/Bm5_high_quality_seqs.fasta
+Small-size sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/14.final_sequences/Bm5_small_size_sequences.fasta
+Sus sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Bm5/14.final_sequences/Bm5_sus_sequences.fasta
+Concatenating
+
+###########################
+Processing sample: HpRS1
+
+step 1. Orient sequences and convert fastq seqs in fasta
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/silva_subset_100.fasta 100%
+404046 nt in 278 seqs, min 900, max 2099, avg 1453
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Orienting sequences 100%
+Forward oriented sequences: 1204 (48.96%)
+Reverse oriented sequences: 1232 (50.10%)
+All oriented sequences:     2436 (99.06%)
+Not oriented sequences:     23 (0.94%)
+Total number of sequences:  2459
+
+Convert fastq seqs in fasta
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/1.oriented
+
+step 2. Chimera detection
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/gold.fasta 100%
+7438266 nt in 5181 seqs, min 1205, max 1585, avg 1436
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Detecting chimeras 100%
+Found 42 (1.7%) chimeras, 2318 (95.2%) non-chimeras,
+and 76 (3.1%) borderline sequences in 2436 unique sequences.
+Taking abundance information into account, this corresponds to
+42 (1.7%) chimeras, 2318 (95.2%) non-chimeras,
+and 76 (3.1%) borderline sequences in 2436 total sequences.
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/2.first_ref_chimeras
+
+step 3. Trimming of the short reads to improve the subsequent clustering (default 1000)
+[33m[WARN][0m you may switch on flag -g/--remove-gaps to remove spaces
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/3.trimming
+
+step 4. First clustering - generate clusters represented by the longest seq as centroids (default 97)
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/3.trimming/HpRS1_oriented_nochim_1000.fasta 100%
+1119188 nt in 925 seqs, min 1001, max 1457, avg 1210
+Masking 100%
+Sorting by length 100%
+Counting k-mers 100%
+Clustering 100%
+Sorting clusters 100%
+Writing clusters 100%
+Clusters: 188 Size min 1, max 249, avg 4.9
+Singletons: 171, 18.5% of seqs, 91.0% of clusters
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/4.first_clustering
+
+step 5. Select only the clusters which are composed by a minimum size, which is the number of reads making a cluster (default 10)
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/4.first_clustering/HpRS1_oriented_nochim_1000_otus_97.fasta 100%
+228907 nt in 188 seqs, min 1003, max 1457, avg 1218
+Getting sizes 100%
+Sorting 100%
+Median abundance: 130
+Writing output 100%
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/5.size_filtered
+
+step 6. Mapping of the reads in the centroids (also the reads < 1000 bp)
+[M::mm_idx_gen::0.001*2.40] collected minimizers
+[M::mm_idx_gen::0.002*4.70] sorted minimizers
+[M::main::0.002*4.64] loaded/built the index for 5 target sequence(s)
+[M::mm_mapopt_update::0.002*4.45] mid_occ = 15
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 5
+[M::mm_idx_stat::0.002*4.30] distinct minimizers: 556 (53.96% are singletons); average occurrences: 2.268; average spacing: 5.504; total length: 6941
+[M::worker_pipeline::0.310*10.47] mapped 2394 sequences
+[M::main] Version: 2.30-r1287
+[M::main] CMD: minimap2 -ax map-ont -K 1G -t 11 guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/5.size_filtered/HpRS1_oriented_nochim_1000_otus_97_min10.fasta guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/2.first_ref_chimeras/HpRS1_oriented_nochim.fasta
+[M::main] Real time: 0.311 sec; CPU: 3.249 sec; Peak RSS: 0.015 GB
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/6.mapping
+
+step 7. Polishing and consensus generation
+[racon::Polisher::initialize] loaded target sequences 0.000059 s
+[racon::Polisher::initialize] loaded sequences 0.009703 s
+[racon::Polisher::initialize] loaded overlaps 0.011376 s
+[racon::Polisher::initialize] aligning overlaps [=>                  ] 0.007839 s[racon::Polisher::initialize] aligning overlaps [==>                 ] 0.007848 s[racon::Polisher::initialize] aligning overlaps [===>                ] 0.007857 s[racon::Polisher::initialize] aligning overlaps [====>               ] 0.007868 s[racon::Polisher::initialize] aligning overlaps [=====>              ] 0.007879 s[racon::Polisher::initialize] aligning overlaps [======>             ] 0.007889 s[racon::Polisher::initialize] aligning overlaps [=======>            ] 0.007899 s[racon::Polisher::initialize] aligning overlaps [========>           ] 0.007909 s[racon::Polisher::initialize] aligning overlaps [=========>          ] 0.007919 s[racon::Polisher::initialize] aligning overlaps [==========>         ] 0.007929 s[racon::Polisher::initialize] aligning overlaps [===========>        ] 0.007939 s[racon::Polisher::initialize] aligning overlaps [============>       ] 0.007950 s[racon::Polisher::initialize] aligning overlaps [=============>      ] 0.007960 s[racon::Polisher::initialize] aligning overlaps [==============>     ] 0.007970 s[racon::Polisher::initialize] aligning overlaps [===============>    ] 0.007980 s[racon::Polisher::initialize] aligning overlaps [================>   ] 0.007991 s[racon::Polisher::initialize] aligning overlaps [=================>  ] 0.008001 s[racon::Polisher::initialize] aligning overlaps [==================> ] 0.008012 s[racon::Polisher::initialize] aligning overlaps [===================>] 0.008022 s[racon::Polisher::initialize] aligning overlaps [====================] 0.008033 s
+[racon::Polisher::initialize] transformed data into windows 0.000598 s
+[racon::Polisher::polish] generated consensus 0.757628 s
+[racon::Polisher::] total = 0.788635 s
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/7.polishing
+
+step 8. Second round of chimera detection after polishing
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/gold.fasta 100%
+7438266 nt in 5181 seqs, min 1205, max 1585, avg 1436
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 5 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 5 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 703 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 703 total sequences.
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/8.second_ref_chimeras
+
+step 9. Taxonomic classification of the consensus using SILVA
+Warning: [blastn] Examining 5 or more matches is recommended
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/9.taxonomy_and_blast
+
+step 10. Reference based trimming
+
+
+Building a new DB, current time: 10/26/2026 18:09:44
+New DB name:   /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/10.reference_based_trimming/ref_seqs/reference_sequences.fasta
+New DB title:  guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/10.reference_based_trimming/ref_seqs/reference_sequences.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 6 sequences in 0.00089407 seconds.
+
+
+[INFO][0m split by ID. idRegexp: ^(\S+)\s?
+[INFO][0m read sequences ...
+[INFO][0m read 5 sequences
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/10.reference_based_trimming/splitted_seqs/HpRS1_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_9;size=212.fasta
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/10.reference_based_trimming/splitted_seqs/HpRS1_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_49;size=93.fasta
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/10.reference_based_trimming/splitted_seqs/HpRS1_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_31;size=19.fasta
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/10.reference_based_trimming/splitted_seqs/HpRS1_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_5;size=130.fasta
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/10.reference_based_trimming/splitted_seqs/HpRS1_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_1;size=249.fasta
+
+step 11. Reference guided consensus generation and correction
+
+step 11. Second clustering - collapse similar consensus in the same cluster
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/10.reference_based_trimming/blast_trim_out/HpRS1_oriented_nochim_1000_otus_97_min10_consenso_nochim_ends_trimmed.fasta 100%
+6037 nt in 5 seqs, min 983, max 1409, avg 1207
+Masking 100%
+Sorting by length 100%
+Counting k-mers 100%
+Clustering 100%
+Sorting clusters 100%
+Writing clusters 100%
+Clusters: 2 Size min 1, max 4, avg 2.5
+Singletons: 1, 20.0% of seqs, 50.0% of clusters
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/11.second_clustering
+running scripts_and_files/make_groups_tsv.py
+groups.tsv written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/11.second_clustering/HpRS1_groups.tsv (5 rows)
+
+file HpRS1_groups.tsv saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/11.second_clustering
+
+running scripts_and_files/sorting_cluster.py
+Wrote guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/11.second_clustering/HpRS1_cluster_0.fasta
+Wrote guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/11.second_clustering/HpRS1_cluster_1.fasta
+files saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/11.second_clustering
+
+step 12. Start reference guided consensus generation and correction
+
+step 12.1. Align the sequences
+outputhat23=16
+treein = 0
+compacttree = 0
+stacksize: 8192 kb
+generating a scoring matrix for nucleotide (dist=200) ... done
+All-to-all alignment.
+    0 / 4    1 / 4    2 / 4tbfast-pair (nuc) Version 7.505
+alg=L, model=DNA200 (2), 2.00 (6.00), -0.10 (-0.30), noshift, amax=0.0
+0 thread(s)
+
+outputhat23=16
+Loading 'hat3.seed' ... 
+done.
+Writing hat3 for iterative refinement
+generating a scoring matrix for nucleotide (dist=200) ... done
+Gap Penalty = -1.53, +0.00, +0.00
+tbutree = 1, compacttree = 0
+Constructing a UPGMA tree ... 
+    0 / 4
+done.
+
+Progressive alignment ... 
+STEP     1 /3 STEP     2 /3 STEP     3 /3 
+done.
+tbfast (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+1 thread(s)
+
+minimumweight = 0.000010
+autosubalignment = 0.000000
+nthread = 0
+randomseed = 0
+blosum 62 / kimura 200
+poffset = 0
+niter = 16
+sueff_global = 0.100000
+nadd = 16
+Loading 'hat3' ... done.
+generating a scoring matrix for nucleotide (dist=200) ... done
+
+    0 / 4
+Segment   1/  1    1-1254
+STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  rejected.STEP 001-002-1  identical.   STEP 001-003-1  identical.   STEP 002-003-1  identical.   STEP 002-002-0  rejected.STEP 002-002-1  identical.   
+Converged.
+
+done
+dvtditr (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+0 thread(s)
+
+
+Strategy:
+ L-INS-i (Probably most accurate, very slow)
+ Iterative refinement method (<16) with LOCAL pairwise alignment information
+
+If unsure which option to use, try 'mafft --auto input > output'.
+For more information, see 'mafft --help', 'mafft --man' and the mafft page.
+
+The default gap scoring scheme has been changed in version 7.110 (2013 Oct).
+It tends to insert more gaps into gap-rich regions than previous versions.
+To disable this change, add the --leavegappyregion option.
+
+Create a consensus sequence from a multiple alignment
+
+step 12.2. consensus generation and correciton
+Warning: [blastn] Examining 5 or more matches is recommended
+[W::fai_insert_index] Ignoring duplicate sequence "AP018162.41583.43181" at byte offset 1907
+[W::fai_insert_index] Ignoring duplicate sequence "KT273274.1.1460" at byte offset 5367
+[W::fai_insert_index] Ignoring duplicate sequence "AP018162.41583.43181" at byte offset 6990
+outputhat23=16
+treein = 0
+compacttree = 0
+stacksize: 8192 kb
+generating a scoring matrix for nucleotide (dist=200) ... done
+All-to-all alignment.
+    0 / 6    1 / 6    2 / 6    3 / 6    4 / 6tbfast-pair (nuc) Version 7.505
+alg=L, model=DNA200 (2), 2.00 (6.00), -0.10 (-0.30), noshift, amax=0.0
+0 thread(s)
+
+outputhat23=16
+Loading 'hat3.seed' ... 
+done.
+Writing hat3 for iterative refinement
+generating a scoring matrix for nucleotide (dist=200) ... done
+Gap Penalty = -1.53, +0.00, +0.00
+tbutree = 1, compacttree = 0
+Constructing a UPGMA tree ... 
+    0 / 6
+done.
+
+Progressive alignment ... 
+STEP     1 /5 STEP     2 /5 STEP     3 /5 STEP     4 /5 STEP     5 /5 
+done.
+tbfast (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+1 thread(s)
+
+minimumweight = 0.000010
+autosubalignment = 0.000000
+nthread = 0
+randomseed = 0
+blosum 62 / kimura 200
+poffset = 0
+niter = 16
+sueff_global = 0.100000
+nadd = 16
+Loading 'hat3' ... done.
+generating a scoring matrix for nucleotide (dist=200) ... done
+
+    0 / 6
+Segment   1/  1    1-1608
+STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  identical.   STEP 001-002-1  identical.   STEP 001-003-0  identical.   STEP 001-003-1  identical.   STEP 001-004-0  identical.   STEP 001-004-1  identical.   STEP 001-005-1  rejected.STEP 002-005-1  rejected.STEP 002-004-0  identical.   STEP 002-004-1  identical.   
+Converged.
+
+done
+dvtditr (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+0 thread(s)
+
+
+Strategy:
+ L-INS-i (Probably most accurate, very slow)
+ Iterative refinement method (<16) with LOCAL pairwise alignment information
+
+If unsure which option to use, try 'mafft --auto input > output'.
+For more information, see 'mafft --help', 'mafft --man' and the mafft page.
+
+The default gap scoring scheme has been changed in version 7.110 (2013 Oct).
+It tends to insert more gaps into gap-rich regions than previous versions.
+To disable this change, add the --leavegappyregion option.
+
+[INFO][0m read sequences ...
+[INFO][0m 6 sequences loaded
+[INFO][0m sorting ...
+[INFO][0m output ...
+Hello I'm running scripts_and_files/cons_correction.py
+
+step 12.3 Taxonomic classification of the polished consensus sequences
+Warning: [blastn] Examining 5 or more matches is recommended
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/12.cons_correction/1.alignment, guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/12.cons_correction/2.consensus and guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/12.cons_correction/3.final_otus
+
+step 13. Third round of chimera detection after polishing
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/gold.fasta 100%
+7438266 nt in 5181 seqs, min 1205, max 1585, avg 1436
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 2 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 2 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 2 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 2 total sequences.
+
+step 14. Gather everything in the final results folder and rename the files
+running scripts_and_files/final_otus_header_rename.py
+Renamed final OTUs written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/14.final_sequences/HpRS1_high_quality_seqs.fasta
+Sus sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/14.final_sequences/HpRS1_sus_sequences.fasta
+Small-size sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/14.final_sequences/HpRS1_small_size_sequences.fasta
+Renamed final OTUs written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/14.final_sequences/HpRS1_high_quality_seqs.fasta
+Small-size sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/14.final_sequences/HpRS1_small_size_sequences.fasta
+Sus sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/HpRS1/14.final_sequences/HpRS1_sus_sequences.fasta
+Concatenating
+
+###########################
+Processing sample: Lv2
+
+step 1. Orient sequences and convert fastq seqs in fasta
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/silva_subset_100.fasta 100%
+404046 nt in 278 seqs, min 900, max 2099, avg 1453
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Orienting sequences 100%
+Forward oriented sequences: 223 (45.98%)
+Reverse oriented sequences: 257 (52.99%)
+All oriented sequences:     480 (98.97%)
+Not oriented sequences:     5 (1.03%)
+Total number of sequences:  485
+
+Convert fastq seqs in fasta
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/1.oriented
+
+step 2. Chimera detection
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/gold.fasta 100%
+7438266 nt in 5181 seqs, min 1205, max 1585, avg 1436
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Detecting chimeras 100%
+Found 9 (1.9%) chimeras, 460 (95.8%) non-chimeras,
+and 11 (2.3%) borderline sequences in 480 unique sequences.
+Taking abundance information into account, this corresponds to
+9 (1.9%) chimeras, 460 (95.8%) non-chimeras,
+and 11 (2.3%) borderline sequences in 480 total sequences.
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/2.first_ref_chimeras
+
+step 3. Trimming of the short reads to improve the subsequent clustering (default 1000)
+[33m[WARN][0m you may switch on flag -g/--remove-gaps to remove spaces
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/3.trimming
+
+step 4. First clustering - generate clusters represented by the longest seq as centroids (default 97)
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/3.trimming/Lv2_oriented_nochim_1000.fasta 100%
+268923 nt in 224 seqs, min 1000, max 1429, avg 1201
+Masking 100%
+Sorting by length 100%
+Counting k-mers 100%
+Clustering 100%
+Sorting clusters 100%
+Writing clusters 100%
+Clusters: 42 Size min 1, max 109, avg 5.3
+Singletons: 32, 14.3% of seqs, 76.2% of clusters
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/4.first_clustering
+
+step 5. Select only the clusters which are composed by a minimum size, which is the number of reads making a cluster (default 10)
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/4.first_clustering/Lv2_oriented_nochim_1000_otus_97.fasta 100%
+51280 nt in 42 seqs, min 1023, max 1429, avg 1221
+Getting sizes 100%
+Sorting 100%
+Median abundance: 36
+Writing output 100%
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/5.size_filtered
+
+step 6. Mapping of the reads in the centroids (also the reads < 1000 bp)
+[M::mm_idx_gen::0.001*2.26] collected minimizers
+[M::mm_idx_gen::0.002*4.89] sorted minimizers
+[M::main::0.002*4.85] loaded/built the index for 3 target sequence(s)
+[M::mm_mapopt_update::0.002*4.66] mid_occ = 10
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 3
+[M::mm_idx_stat::0.002*4.52] distinct minimizers: 509 (60.31% are singletons); average occurrences: 1.442; average spacing: 5.619; total length: 4124
+[M::worker_pipeline::0.050*9.79] mapped 471 sequences
+[M::main] Version: 2.30-r1287
+[M::main] CMD: minimap2 -ax map-ont -K 1G -t 11 guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/5.size_filtered/Lv2_oriented_nochim_1000_otus_97_min10.fasta guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/2.first_ref_chimeras/Lv2_oriented_nochim.fasta
+[M::main] Real time: 0.050 sec; CPU: 0.487 sec; Peak RSS: 0.015 GB
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/6.mapping
+
+step 7. Polishing and consensus generation
+[racon::Polisher::initialize] loaded target sequences 0.000050 s
+[racon::Polisher::initialize] loaded sequences 0.002083 s
+[racon::Polisher::initialize] loaded overlaps 0.001682 s
+[racon::Polisher::initialize] aligning overlaps [=>                  ] 0.001385 s[racon::Polisher::initialize] aligning overlaps [==>                 ] 0.001394 s[racon::Polisher::initialize] aligning overlaps [===>                ] 0.001400 s[racon::Polisher::initialize] aligning overlaps [====>               ] 0.001406 s[racon::Polisher::initialize] aligning overlaps [=====>              ] 0.001412 s[racon::Polisher::initialize] aligning overlaps [======>             ] 0.001418 s[racon::Polisher::initialize] aligning overlaps [=======>            ] 0.001424 s[racon::Polisher::initialize] aligning overlaps [========>           ] 0.001430 s[racon::Polisher::initialize] aligning overlaps [=========>          ] 0.001435 s[racon::Polisher::initialize] aligning overlaps [==========>         ] 0.001442 s[racon::Polisher::initialize] aligning overlaps [===========>        ] 0.001447 s[racon::Polisher::initialize] aligning overlaps [============>       ] 0.001454 s[racon::Polisher::initialize] aligning overlaps [=============>      ] 0.001467 s[racon::Polisher::initialize] aligning overlaps [==============>     ] 0.001473 s[racon::Polisher::initialize] aligning overlaps [===============>    ] 0.001479 s[racon::Polisher::initialize] aligning overlaps [================>   ] 0.001485 s[racon::Polisher::initialize] aligning overlaps [=================>  ] 0.001490 s[racon::Polisher::initialize] aligning overlaps [==================> ] 0.001496 s[racon::Polisher::initialize] aligning overlaps [===================>] 0.001501 s[racon::Polisher::initialize] aligning overlaps [====================] 0.001507 s
+[racon::Polisher::initialize] transformed data into windows 0.000200 s
+[racon::Polisher::polish] generated consensus 0.124047 s
+[racon::Polisher::] total = 0.129789 s
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/7.polishing
+
+step 8. Second round of chimera detection after polishing
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/gold.fasta 100%
+7438266 nt in 5181 seqs, min 1205, max 1585, avg 1436
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 3 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 3 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 166 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 166 total sequences.
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/8.second_ref_chimeras
+
+step 9. Taxonomic classification of the consensus using SILVA
+Warning: [blastn] Examining 5 or more matches is recommended
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/9.taxonomy_and_blast
+
+step 10. Reference based trimming
+
+
+Building a new DB, current time: 10/26/2026 18:11:05
+New DB name:   /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/10.reference_based_trimming/ref_seqs/reference_sequences.fasta
+New DB title:  guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/10.reference_based_trimming/ref_seqs/reference_sequences.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 3 sequences in 0.000674009 seconds.
+
+
+[INFO][0m split by ID. idRegexp: ^(\S+)\s?
+[INFO][0m read sequences ...
+[INFO][0m read 3 sequences
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/10.reference_based_trimming/splitted_seqs/Lv2_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_1;size=109.fasta
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/10.reference_based_trimming/splitted_seqs/Lv2_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_17;size=36.fasta
+[INFO][0m write 1 sequences to file: guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/10.reference_based_trimming/splitted_seqs/Lv2_oriented_nochim_1000_otus_97_min10_consenso_nochim.part_OTU_2;size=21.fasta
+
+step 11. Reference guided consensus generation and correction
+
+step 11. Second clustering - collapse similar consensus in the same cluster
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/10.reference_based_trimming/blast_trim_out/Lv2_oriented_nochim_1000_otus_97_min10_consenso_nochim_ends_trimmed.fasta 100%
+4082 nt in 3 seqs, min 1230, max 1428, avg 1361
+Masking 100%
+Sorting by length 100%
+Counting k-mers 100%
+Clustering 100%
+Sorting clusters 100%
+Writing clusters 100%
+Clusters: 2 Size min 1, max 2, avg 1.5
+Singletons: 1, 33.3% of seqs, 50.0% of clusters
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/11.second_clustering
+running scripts_and_files/make_groups_tsv.py
+groups.tsv written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/11.second_clustering/Lv2_groups.tsv (3 rows)
+
+file Lv2_groups.tsv saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/11.second_clustering
+
+running scripts_and_files/sorting_cluster.py
+Wrote guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/11.second_clustering/Lv2_cluster_0.fasta
+Wrote guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/11.second_clustering/Lv2_cluster_1.fasta
+files saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/11.second_clustering
+
+step 12. Start reference guided consensus generation and correction
+
+step 12.1. Align the sequences
+outputhat23=16
+treein = 0
+compacttree = 0
+stacksize: 8192 kb
+generating a scoring matrix for nucleotide (dist=200) ... done
+All-to-all alignment.
+    0 / 2tbfast-pair (nuc) Version 7.505
+alg=L, model=DNA200 (2), 2.00 (6.00), -0.10 (-0.30), noshift, amax=0.0
+0 thread(s)
+
+outputhat23=16
+Loading 'hat3.seed' ... 
+done.
+Writing hat3 for iterative refinement
+generating a scoring matrix for nucleotide (dist=200) ... done
+Gap Penalty = -1.53, +0.00, +0.00
+tbutree = 1, compacttree = 0
+Constructing a UPGMA tree ... 
+    0 / 2
+done.
+
+Progressive alignment ... 
+STEP     1 /1 
+done.
+tbfast (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+1 thread(s)
+
+minimumweight = 0.000010
+autosubalignment = 0.000000
+nthread = 0
+randomseed = 0
+blosum 62 / kimura 200
+poffset = 0
+niter = 16
+sueff_global = 0.100000
+nadd = 16
+Loading 'hat3' ... done.
+generating a scoring matrix for nucleotide (dist=200) ... done
+
+    0 / 2
+Segment   1/  1    1-1432
+STEP 001-001-1  identical.   done
+dvtditr (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+0 thread(s)
+
+
+Strategy:
+ L-INS-i (Probably most accurate, very slow)
+ Iterative refinement method (<16) with LOCAL pairwise alignment information
+
+If unsure which option to use, try 'mafft --auto input > output'.
+For more information, see 'mafft --help', 'mafft --man' and the mafft page.
+
+The default gap scoring scheme has been changed in version 7.110 (2013 Oct).
+It tends to insert more gaps into gap-rich regions than previous versions.
+To disable this change, add the --leavegappyregion option.
+
+Create a consensus sequence from a multiple alignment
+
+step 12.2. consensus generation and correciton
+Warning: [blastn] Examining 5 or more matches is recommended
+outputhat23=16
+treein = 0
+compacttree = 0
+stacksize: 8192 kb
+generating a scoring matrix for nucleotide (dist=200) ... done
+All-to-all alignment.
+    0 / 4    1 / 4    2 / 4tbfast-pair (nuc) Version 7.505
+alg=L, model=DNA200 (2), 2.00 (6.00), -0.10 (-0.30), noshift, amax=0.0
+0 thread(s)
+
+outputhat23=16
+Loading 'hat3.seed' ... 
+done.
+Writing hat3 for iterative refinement
+generating a scoring matrix for nucleotide (dist=200) ... done
+Gap Penalty = -1.53, +0.00, +0.00
+tbutree = 1, compacttree = 0
+Constructing a UPGMA tree ... 
+    0 / 4
+done.
+
+Progressive alignment ... 
+STEP     1 /3 STEP     2 /3 STEP     3 /3 
+done.
+tbfast (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+1 thread(s)
+
+minimumweight = 0.000010
+autosubalignment = 0.000000
+nthread = 0
+randomseed = 0
+blosum 62 / kimura 200
+poffset = 0
+niter = 16
+sueff_global = 0.100000
+nadd = 16
+Loading 'hat3' ... done.
+generating a scoring matrix for nucleotide (dist=200) ... done
+
+    0 / 4
+Segment   1/  1    1-1507
+STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  identical.   STEP 001-002-1  identical.   STEP 001-003-1  identical.   STEP 002-003-1  identical.   STEP 002-002-0  identical.   STEP 002-002-1  identical.   
+Converged.
+
+done
+dvtditr (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+0 thread(s)
+
+
+Strategy:
+ L-INS-i (Probably most accurate, very slow)
+ Iterative refinement method (<16) with LOCAL pairwise alignment information
+
+If unsure which option to use, try 'mafft --auto input > output'.
+For more information, see 'mafft --help', 'mafft --man' and the mafft page.
+
+The default gap scoring scheme has been changed in version 7.110 (2013 Oct).
+It tends to insert more gaps into gap-rich regions than previous versions.
+To disable this change, add the --leavegappyregion option.
+
+[INFO][0m read sequences ...
+[INFO][0m 4 sequences loaded
+[INFO][0m sorting ...
+[INFO][0m output ...
+Hello I'm running scripts_and_files/cons_correction.py
+
+step 12.3 Taxonomic classification of the polished consensus sequences
+Warning: [blastn] Examining 5 or more matches is recommended
+outputs saved in guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/12.cons_correction/1.alignment, guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/12.cons_correction/2.consensus and guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/12.cons_correction/3.final_otus
+
+step 13. Third round of chimera detection after polishing
+vsearch v2.30.0_linux_x86_64, 62.7GB RAM, 12 cores
+https://github.com/torognes/vsearch
+
+Reading file /mnt/capivaradisk/carlo/16S_PIPELINE/guanopipeline_v6/scripts_and_files/16S_DB/gold.fasta 100%
+7438266 nt in 5181 seqs, min 1205, max 1585, avg 1436
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 2 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 2 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 2 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 2 total sequences.
+
+step 14. Gather everything in the final results folder and rename the files
+running scripts_and_files/final_otus_header_rename.py
+Renamed final OTUs written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/14.final_sequences/Lv2_high_quality_seqs.fasta
+Sus sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/14.final_sequences/Lv2_sus_sequences.fasta
+Small-size sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/14.final_sequences/Lv2_small_size_sequences.fasta
+Renamed final OTUs written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/14.final_sequences/Lv2_high_quality_seqs.fasta
+Small-size sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/14.final_sequences/Lv2_small_size_sequences.fasta
+Sus sequences written to guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/Lv2/14.final_sequences/Lv2_sus_sequences.fasta
+Concatenating
+running scripts_and_files/summary_table.py
+Wrote guanopipeline_v6_results/GitHub_test_data/test_data/5.amplicons_seqs/test_data_summary_table.tsv
+3 samples
+5 taxa
+copying results
+
+==== OTUs GENERATION COMPLETED ====
+End time: Mon Oct 26 06:11:44 PM CET 2026
+Log file saved in: guanopipeline_v6_results/GitHub_test_data/test_data/logs/5.log_amplicons_seqs.txt
+
+
+This is 6.phylogeny.sh
+==== PRELIMIANRY PHYLOGENY ====
+Start time: Mon Oct 26 06:11:44 PM CET 2026
+Input data path: data/GitHub_test_data
+Output directory: guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny
+Threads: 11
+
+ __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<  __(.)<
+ \___)   \___)   \___)   \___)   \___)   \___)   \___)   \___)
+quack quack quack quack quack quack quack quack quack quack quack
+
+Process sample Bm5
+Process sample HpRS1
+Process sample Lv2
+[INFO][0m 2 duplicated records removed
+outputhat23=16
+treein = 0
+compacttree = 0
+stacksize: 8192 kb
+generating a scoring matrix for nucleotide (dist=200) ... done
+All-to-all alignment.
+    0 / 10    1 / 10    2 / 10    3 / 10    4 / 10    5 / 10    6 / 10    7 / 10    8 / 10tbfast-pair (nuc) Version 7.505
+alg=A, model=DNA200 (2), 2.00 (6.00), -0.10 (-0.30), noshift, amax=0.0
+0 thread(s)
+
+outputhat23=16
+Loading 'hat3.seed' ... 
+done.
+Writing hat3 for iterative refinement
+generating a scoring matrix for nucleotide (dist=200) ... done
+Gap Penalty = -1.53, +0.00, +0.00
+tbutree = 1, compacttree = 0
+Constructing a UPGMA tree ... 
+    0 / 10
+done.
+
+Progressive alignment ... 
+STEP     1 /9 STEP     2 /9 STEP     3 /9 STEP     4 /9 STEP     5 /9 STEP     6 /9 STEP     7 /9 STEP     8 /9 STEP     9 /9 
+done.
+tbfast (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+1 thread(s)
+
+minimumweight = 0.000010
+autosubalignment = 0.000000
+nthread = 0
+randomseed = 0
+blosum 62 / kimura 200
+poffset = 0
+niter = 16
+sueff_global = 0.100000
+nadd = 16
+Loading 'hat3' ... done.
+generating a scoring matrix for nucleotide (dist=200) ... done
+
+    0 / 10
+Segment   1/  1    1-1615
+STEP 001-001-0  identical.   STEP 001-001-1  identical.   STEP 001-002-0  identical.   STEP 001-002-1  identical.   STEP 001-003-0  identical.   STEP 001-003-1  identical.   STEP 001-004-0  identical.   STEP 001-004-1  identical.   STEP 001-005-0  accepted.STEP 001-005-1  rejected.STEP 001-006-0  accepted.STEP 001-006-1  rejected.STEP 001-007-0  identical.   STEP 001-007-1  accepted.STEP 001-008-0  rejected.STEP 001-008-1  accepted.STEP 001-009-1  rejected.STEP 002-009-1  rejected.STEP 002-008-0  rejected.STEP 002-008-1  identical.   STEP 002-007-0  accepted.STEP 002-007-1  identical.   STEP 002-006-0  rejected.STEP 002-006-1  rejected.STEP 002-005-0  identical.   STEP 002-005-1  rejected.STEP 002-004-0  identical.   STEP 002-004-1  identical.   STEP 002-003-0  rejected.STEP 002-003-1  identical.   STEP 002-002-0  identical.   STEP 002-002-1  identical.   STEP 002-001-0  identical.   STEP 002-001-1  identical.   STEP 003-001-0  identical.   STEP 003-001-1  identical.   STEP 003-002-0  identical.   STEP 003-002-1  identical.   STEP 003-003-0  rejected.STEP 003-003-1  identical.   STEP 003-004-0  identical.   
+Converged.
+
+done
+dvtditr (nuc) Version 7.505
+alg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0
+0 thread(s)
+
+
+Strategy:
+ G-INS-i (Suitable for sequences of similar lengths, very slow)
+ Iterative refinement method (<16) with GLOBAL pairwise alignment information
+
+If unsure which option to use, try 'mafft --auto input > output'.
+For more information, see 'mafft --help', 'mafft --man' and the mafft page.
+
+The default gap scoring scheme has been changed in version 7.110 (2013 Oct).
+It tends to insert more gaps into gap-rich regions than previous versions.
+To disable this change, add the --leavegappyregion option.
+
+IQ-TREE multicore version 2.0.7 for Linux 64-bit built Apr  1 2024
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor,
+Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Host:    django (AVX2, FMA3, 62 GB RAM)
+Command: iqtree2 -s guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta -bb 1000 -alrt 1000 -nt 11
+Seed:    460498 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Mon Oct 26 18:11:57 2026
+Kernel:  AVX+FMA - 11 threads (12 CPU cores detected)
+
+Reading alignment file guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta ... Fasta format detected
+Alignment most likely contains DNA/RNA sequences
+Alignment has 10 sequences with 1563 columns, 450 distinct patterns
+441 parsimony-informative, 155 singleton sites, 966 constant sites
+                                                                                  Gap/Ambiguity  Composition  p-value
+   1  Bm5_cluster_1                                                                      15.99%    passed     99.34%
+   2  HpRS1_cluster_1                                                                    20.22%    failed      0.00%
+   3  HpRS1_cluster_0                                                                    10.04%    failed      0.17%
+   4  Lv2_cluster_0                                                                       8.51%    passed     59.85%
+   5  Lv2_cluster_1                                                                       8.89%    failed      0.14%
+   6  APOS01000035.1201.2727_Acinetobacter_Acinetobacter_guillouiae_CIP_63.46             2.30%    passed     10.18%
+   7  AB624350.1.1421_Candidatus_Lariskella_Candidatus_Lariskella_arthropodarum           9.09%    passed     99.20%
+   8  EF522125.1.1538_Pseudoxanthomonas_Xanthomonas_sp._CU12                              1.60%    failed      0.11%
+   9  AP018162.41583.43181_endosymbionts_endosymbiont_of_Sipalinus_gigas                  0.38%    failed      0.00%
+  10  CP011148.1167976.1169480_Wolbachia_Wolbachia_endosymbiont_of_Drosophila_incompta    3.71%    passed     39.92%
+****  TOTAL                                                                               8.07%  5 sequences failed composition chi2 test (p-value<5%; df=3)
+
+
+Create initial parsimony tree by phylogenetic likelihood library (PLL)... 0.000 seconds
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+Perform fast likelihood tree search using GTR+I+G model...
+Estimate model parameters (epsilon = 5.000)
+Perform nearest neighbor interchange...
+Estimate model parameters (epsilon = 1.000)
+1. Initial log-likelihood: -6123.521
+Optimal log-likelihood: -6123.447
+Rate parameters:  A-C: 0.42958  A-G: 2.71639  A-T: 2.08159  C-G: 0.49880  C-T: 5.18497  G-T: 1.00000
+Base frequencies:  A: 0.274  C: 0.206  G: 0.293  T: 0.228
+Proportion of invariable sites: 0.305
+Gamma shape alpha: 0.893
+Parameters optimization took 1 rounds (0.003 sec)
+Time for fast ML tree search: 0.034 seconds
+
+NOTE: ModelFinder requires 3 MB RAM!
+ModelFinder will test up to 286 DNA models (sample size: 1563) ...
+ No. Model         -LnL         df  AIC          AICc         BIC
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+  1  GTR+F         6283.600     25  12617.199    12618.045    12751.058
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+  2  GTR+F+I       6123.437     26  12298.875    12299.789    12438.088
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+  3  GTR+F+G4      6123.734     26  12299.468    12300.383    12438.682
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+  4  GTR+F+I+G4    6123.427     27  12300.854    12301.839    12445.422
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+  5  GTR+F+R2      6129.931     27  12313.861    12314.846    12458.429
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+  6  GTR+F+R3      6124.273     29  12306.545    12307.680    12461.822
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 15  SYM+I         6140.060     23  12326.120    12326.838    12449.271
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 16  SYM+G4        6141.216     23  12328.431    12329.149    12451.581
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 17  SYM+I+G4      6140.933     24  12329.865    12330.646    12458.370
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 28  TVM+F+I       6134.122     25  12318.243    12319.089    12452.102
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 29  TVM+F+G4      6136.380     25  12322.760    12323.605    12456.619
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 30  TVM+F+I+G4    6136.196     26  12324.392    12325.306    12463.606
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 41  TVMe+I        6141.593     22  12327.186    12327.843    12444.982
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 42  TVMe+G4       6143.473     22  12330.946    12331.604    12448.742
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 43  TVMe+I+G4     6143.225     23  12332.449    12333.167    12455.600
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 54  TIM3+F+I      6133.163     24  12314.327    12315.107    12442.832
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 55  TIM3+F+G4     6132.072     24  12312.143    12312.923    12440.648
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 56  TIM3+F+I+G4   6131.791     25  12313.582    12314.428    12447.442
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 67  TIM3e+I       6148.698     21  12339.397    12339.996    12451.838
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 68  TIM3e+G4      6148.420     21  12338.839    12339.439    12451.281
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 69  TIM3e+I+G4    6148.138     22  12340.277    12340.934    12458.072
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 80  TIM2+F+I      6147.532     24  12343.064    12343.844    12471.568
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 81  TIM2+F+G4     6146.201     24  12340.402    12341.182    12468.907
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 82  TIM2+F+I+G4   6145.990     25  12341.979    12342.825    12475.838
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 93  TIM2e+I       6168.375     21  12378.751    12379.350    12491.192
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 94  TIM2e+G4      6168.622     21  12379.245    12379.845    12491.687
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+ 95  TIM2e+I+G4    6168.398     22  12380.797    12381.454    12498.593
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+106  TIM+F+I       6150.387     24  12348.774    12349.554    12477.279
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+107  TIM+F+G4      6149.080     24  12346.159    12346.939    12474.664
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+108  TIM+F+I+G4    6148.761     25  12347.522    12348.368    12481.381
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+119  TIMe+I        6170.341     21  12382.683    12383.282    12495.124
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+120  TIMe+G4       6170.455     21  12382.911    12383.510    12495.352
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+121  TIMe+I+G4     6170.160     22  12384.320    12384.977    12502.116
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+132  TPM3u+F+I     6143.861     23  12333.721    12334.439    12456.871
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+133  TPM3u+F+G4    6144.753     23  12335.505    12336.223    12458.656
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+134  TPM3u+F+I+G4  6144.535     24  12337.071    12337.851    12465.575
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+145  TPM3+F+I      6143.861     23  12333.721    12334.439    12456.871
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+146  TPM3+F+G4     6144.753     23  12335.505    12336.223    12458.656
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+147  TPM3+F+I+G4   6144.535     24  12337.071    12337.851    12465.575
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+158  TPM2u+F+I     6157.815     23  12361.630    12362.347    12484.780
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+159  TPM2u+F+G4    6159.198     23  12364.396    12365.114    12487.547
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+160  TPM2u+F+I+G4  6159.061     24  12366.121    12366.901    12494.626
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+171  TPM2+F+I      6157.815     23  12361.630    12362.347    12484.780
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+172  TPM2+F+G4     6159.198     23  12364.396    12365.114    12487.547
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+173  TPM2+F+I+G4   6159.061     24  12366.121    12366.901    12494.626
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+184  K3Pu+F+I      6160.906     23  12367.812    12368.529    12490.962
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+185  K3Pu+F+G4     6162.032     23  12370.064    12370.782    12493.215
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+186  K3Pu+F+I+G4   6161.826     24  12371.652    12372.433    12500.157
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+197  K3P+I         6171.681     20  12383.362    12383.906    12490.449
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+198  K3P+G4        6172.527     20  12385.054    12385.599    12492.141
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+199  K3P+I+G4      6172.257     21  12386.513    12387.113    12498.955
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+210  TN+F+I        6154.174     23  12354.349    12355.066    12477.499
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+211  TN+F+G4       6152.270     23  12350.541    12351.258    12473.691
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+212  TN+F+I+G4     6151.998     24  12351.995    12352.775    12480.500
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+223  TNe+I         6173.944     20  12387.889    12388.434    12494.976
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+224  TNe+G4        6173.514     20  12387.028    12387.573    12494.115
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+225  TNe+I+G4      6173.228     21  12388.457    12389.056    12500.898
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+236  HKY+F+I       6164.518     22  12373.036    12373.693    12490.832
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+237  HKY+F+G4      6165.191     22  12374.382    12375.039    12492.178
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+238  HKY+F+I+G4    6164.986     23  12375.972    12376.690    12499.123
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+249  K2P+I         6175.246     19  12388.492    12388.984    12490.224
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+250  K2P+G4        6175.608     19  12389.217    12389.709    12490.950
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+251  K2P+I+G4      6175.337     20  12390.675    12391.220    12497.762
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+262  F81+F+I       6296.421     21  12634.841    12635.441    12747.283
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+263  F81+F+G4      6299.705     21  12641.410    12642.009    12753.851
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+264  F81+F+I+G4    6299.085     22  12642.171    12642.828    12759.967
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+275  JC+I          6309.835     18  12655.670    12656.113    12752.048
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+276  JC+G4         6313.281     18  12662.563    12663.006    12758.941
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+277  JC+I+G4       6312.687     19  12663.375    12663.867    12765.108
+Akaike Information Criterion:           GTR+F+I
+Corrected Akaike Information Criterion: GTR+F+I
+Bayesian Information Criterion:         GTR+F+I
+Best-fit model: GTR+F+I chosen according to BIC
+
+All model information printed to guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.model.gz
+CPU time for ModelFinder: 5.083 seconds (0h:0m:5s)
+Wall-clock time for ModelFinder: 0.475 seconds (0h:0m:0s)
+Generating 1000 samples for ultrafast bootstrap (seed: 460498)...
+
+NOTE: 1 MB RAM (0 GB) is required!
+WARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.
+Estimate model parameters (epsilon = 0.100)
+1. Initial log-likelihood: -6123.437
+Optimal log-likelihood: -6123.435
+Rate parameters:  A-C: 0.45490  A-G: 2.84587  A-T: 2.15097  C-G: 0.56866  C-T: 4.88594  G-T: 1.00000
+Base frequencies:  A: 0.274  C: 0.206  G: 0.293  T: 0.228
+Proportion of invariable sites: 0.525
+Parameters optimization took 1 rounds (0.001 sec)
+Computing ML distances based on estimated model parameters... 0.003 sec
+Computing BIONJ tree...
+0.000 seconds
+Log-likelihood of BIONJ tree: -6124.218
+--------------------------------------------------------------------
+|             INITIALIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Generating 98 parsimony trees... 0.045 second
+Computing log-likelihood of 85 initial trees ... 0.057 seconds
+Current best score: -6123.435
+
+Do NNI search on 20 best initial trees
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 1: -6123.424
+Iteration 10 / LogL: -6124.938 / Time: 0h:0m:0s
+Iteration 20 / LogL: -6123.507 / Time: 0h:0m:0s
+Finish initializing candidate tree set (2)
+Current best tree score: -6123.424 / CPU time: 0.221
+Number of iterations: 20
+--------------------------------------------------------------------
+|               OPTIMIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+UPDATE BEST LOG-LIKELIHOOD: -6123.424
+Iteration 30 / LogL: -6123.507 / Time: 0h:0m:5s (0h:0m:12s left)
+Iteration 40 / LogL: -6124.204 / Time: 0h:0m:5s (0h:0m:8s left)
+Iteration 50 / LogL: -6123.474 / Time: 0h:0m:5s (0h:0m:5s left)
+Log-likelihood cutoff on original alignment: -6134.516
+Iteration 60 / LogL: -6124.351 / Time: 0h:0m:5s (0h:0m:3s left)
+Iteration 70 / LogL: -6123.484 / Time: 0h:0m:5s (0h:0m:2s left)
+Iteration 80 / LogL: -6123.473 / Time: 0h:0m:5s (0h:0m:1s left)
+Iteration 90 / LogL: -6125.122 / Time: 0h:0m:5s (0h:0m:0s left)
+Iteration 100 / LogL: -6189.928 / Time: 0h:0m:5s (0h:0m:0s left)
+Log-likelihood cutoff on original alignment: -6133.523
+NOTE: Bootstrap correlation coefficient of split occurrence frequencies: 1.000
+TREE SEARCH COMPLETED AFTER 102 ITERATIONS / Time: 0h:0m:5s
+
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -6123.424
+Optimal log-likelihood: -6123.423
+Rate parameters:  A-C: 0.46397  A-G: 2.91427  A-T: 2.20504  C-G: 0.58515  C-T: 5.00663  G-T: 1.00000
+Base frequencies:  A: 0.274  C: 0.206  G: 0.293  T: 0.228
+Proportion of invariable sites: 0.525
+Parameters optimization took 1 rounds (0.004 sec)
+BEST SCORE FOUND : -6123.423
+
+Testing tree branches by SH-like aLRT with 1000 replicates...
+0.025 sec.
+Creating bootstrap support values...
+Split supports printed to NEXUS file guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.splits.nex
+Total tree length: 0.896
+
+Total number of iterations: 102
+CPU time used for tree search: 10.286 sec (0h:0m:10s)
+Wall-clock time used for tree search: 5.958 sec (0h:0m:5s)
+Total CPU time used: 10.722 sec (0h:0m:10s)
+Total wall-clock time used: 6.037 sec (0h:0m:6s)
+
+Computing bootstrap consensus tree...
+Reading input file guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.splits.nex...
+10 taxa and 20 splits.
+Consensus tree written to guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.contree
+Reading input trees file guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.contree
+Log-likelihood of consensus tree: -6123.425
+
+Analysis results written to: 
+  IQ-TREE report:                guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.iqtree
+  Maximum-likelihood tree:       guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.treefile
+  Likelihood distances:          guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.mldist
+
+Ultrafast bootstrap approximation results written to:
+  Split support values:          guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.splits.nex
+  Consensus tree:                guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.contree
+  Screen log file:               guanopipeline_v6_results/GitHub_test_data/test_data/6.phylogeny/test_data_sequences_trimmed.fasta.log
+
+Date and Time: Mon Oct 26 18:12:06 2026
+
+==== PHYLOGENY COMPLETED ====
+End time: Mon Oct 26 06:12:06 PM CET 2026
+Log file saved in: guanopipeline_v6_results/GitHub_test_data/test_data/logs/6.phylogeny.txt
+
+

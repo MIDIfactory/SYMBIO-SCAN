@@ -1,0 +1,4 @@
+file	format	type	num_seqs	sum_len	min_len	avg_len	max_len
+guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/trimmed/trimmed_Bm5.fastq	FASTQ	DNA	1169	1067326	500	913.0	1466
+guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/trimmed/trimmed_HpRS1.fastq	FASTQ	DNA	2476	2249823	500	908.7	1739
+guanopipeline_v6_results/GitHub_test_data/test_data/2.trimming/trimmed/trimmed_Lv2.fastq	FASTQ	DNA	498	475000	501	953.8	1631
