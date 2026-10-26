@@ -79,7 +79,7 @@ mkdir -p "$out_QC" "$out_fastqc" "$out_multiqc" "$out_nanoplot"
 # Run seqkit
 echo ""
 echo "=== Running seqkit ==="
-seqkit stats "$in_trimmed_reads"/*.fastq | sed -E 's/ +/\t/g' > "$out_QC/${results_name}_stats_post_trimming.txt"
+seqkit stats -T "$in_trimmed_reads"/*.fastq > "$out_QC/${results_name}_stats_post_trimming.txt"
 
 cat "$out_QC/${results_name}_stats_post_trimming.txt"
 
