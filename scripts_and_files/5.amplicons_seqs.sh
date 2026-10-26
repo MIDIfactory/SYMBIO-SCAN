@@ -125,7 +125,7 @@ touch "${full_sus_summary_list}"
 full_small_size_summary_list="${OTUs_out}/${results_name}_full_small_size_summary_list.fasta"
 touch "${full_sus_summary_list}"
 
-full_summary_list="${OTUs_out}/${results_name}_full_summary_list.fasta"
+full_summary_list="${OTUs_out}/${results_name}_full_hq_summary_list.fasta"
 touch "${full_summary_list}"
 
 stats="${OTUs_out}/${results_name}_clustering_stats.tsv"
@@ -206,6 +206,7 @@ for file in "$data_path"/*.fastq; do
 
   echo "outputs saved in $trim_out"
 
+
   # 4. First clustering - generate clusters represented by the longest seq as centroids (default 97)
   echo ""
   echo "step 4. First clustering - generate clusters represented by the longest seq as centroids (default 97)"
@@ -247,7 +248,7 @@ for file in "$data_path"/*.fastq; do
   -K 1G \
   -t $threads \
   "$min_size_cluster/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}.fasta" \
-  "$oriented_out/${sample}_oriented.fasta" \
+  "$first_chimera_out/${sample}_oriented_nochim.fasta" \
   > "$mapping_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}.sam"
 
   echo "outputs saved in $mapping_out"
@@ -259,7 +260,7 @@ for file in "$data_path"/*.fastq; do
   polishing_out="$sample_out/7.polishing"
   mkdir -p "$polishing_out"
   racon \
-  "$oriented_out/${sample}_oriented.fasta" \
+  "$first_chimera_out/${sample}_oriented_nochim.fasta" \
   "$mapping_out/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}.sam" \
   "$min_size_cluster/${sample}_oriented_nochim_${min_len}_otus_${id_1}_min${min_size}.fasta" \
   -t $threads \
