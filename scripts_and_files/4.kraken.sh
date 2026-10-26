@@ -94,8 +94,8 @@ for raw_read in "$data_path"/*fastq; do
         --unclassified-out "$kraken_out_raw/$filename.unclassified.fq" \
         "$raw_read" > "$kraken_out_raw/$filename.0.0_raw.kraken"
 	
-    UNC_raw=$(grep -c ">" "$kraken_out_raw/$filename.unclassified.fq")
-    CLAS_raw=$(grep -c ">" "$kraken_out_raw/$filename.classified.fq")
+    UNC_raw=$(seqkit fx2tab "$kraken_out_raw/$filename.unclassified.fq" | wc -l)
+    CLAS_raw=$(seqkit fx2tab "$kraken_out_raw/$filename.classified.fq" | wc -l)
     P_raw=$(grep -c -w P "$kraken_out_raw/$filename.0.0_raw.report")
     C_raw=$(grep -c -w C "$kraken_out_raw/$filename.0.0_raw.report")
     O_raw=$(grep -c -w O "$kraken_out_raw/$filename.0.0_raw.report")
@@ -154,8 +154,8 @@ for file in "$filtered_reads"/*fastq; do
 	    --unclassified-out "$kraken_out_filt/$filename.unclassified.fq" \
         "$file" > "$kraken_out_filt/$filename.kraken"
 
-    UNC_filt=$(grep -c ">" "$kraken_out_filt/$filename.unclassified.fq")
-    CLAS_filt=$(grep -c ">" "$kraken_out_filt/$filename.classified.fq")
+    UNC_filt=$(seqkit fx2tab "$kraken_out_filt/$filename.unclassified.fq" | wc -l)
+    CLAS_filt=$(seqkit fx2tab "$kraken_out_filt/$filename.classified.fq" | wc -l)
     P_filt=$(grep -c -w P "$kraken_out_filt/$filename.report")
     C_filt=$(grep -c -w C "$kraken_out_filt/$filename.report")
     O_filt=$(grep -c -w O "$kraken_out_filt/$filename.report")
@@ -183,6 +183,7 @@ done
 echo "=== Generating Krona HTML visualization ==="
 krona_res_fix=$(echo $result | sed 's/\//_/g')
 ktImportText "$krona_out_filt"/*.krona -o "$krona_out_filt/${results_name}_krona_filt.html"
+sed -i 's/trimmed_//g' "$krona_out_filt/${results_name}_krona_filt.html"
 
 echo ""
 echo "output saved in $krona_out_filt/${results_name}_krona_filt.html"
