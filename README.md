@@ -235,4 +235,4 @@ The obtained high-quality sequences and the reference sequences used for their t
 
 ## Citation
 If our tool is useful to you, please cite:
-Croci C, Iamundo G, Baharibabadi A, Sabatelli S, Sassera D, Castelli M. SYMBIO-SCAN, a full-length 16S rRNA gene-based workflow optimized for bacterial symbiont detection and discovery from long read sequencing. 
+Croci C, Iamundo G, Baharibabadi A, Sabatelli S, Sassera D, Castelli M. SYMBIO-SCAN, a full-length 16S rRNA gene-based workflow optimized for bacterial symbiont detection and discovery from long read sequencing. BioRxiv, 2026-10, https://doi.org/10.64898/2026.10.26.761872
